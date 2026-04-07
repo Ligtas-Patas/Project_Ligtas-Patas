@@ -3,106 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ligtas-Patas</title>
+    <title>Ligtas-Patas — Admin Login</title>
     <link rel="stylesheet" href="loginstyle.css" />
     <script src="https://kit.fontawesome.com/d65d73018d.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Leaflet for admin map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <style>
-        /* Admin panel — hidden until login */
-        #admin-panel { display: none; padding: 30px 40px; background: rgb(2,49,2); color: white; }
-        #admin-panel h2 { font-size: 1.8rem; margin-bottom: 6px; color: lightgreen; }
-        #admin-panel p  { color: #aaa; margin-bottom: 24px; font-size: 0.95rem; }
-
-        .admin-grid {
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* POI cards sidebar */
-        .poi-sidebar { display: flex; flex-direction: column; gap: 14px; }
-
-        .poi-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 10px;
-            padding: 14px 16px;
-            cursor: pointer;
-            transition: border-color .2s;
-        }
-        .poi-card:hover { border-color: lightgreen; }
-        .poi-card.active { border-color: lightgreen; background: rgba(144,238,144,0.08); }
-
-        .poi-card-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
-        .poi-card-coords { font-size: 11px; color: #888; margin-bottom: 10px; }
-
-        .status-pills { display: flex; gap: 6px; flex-wrap: wrap; }
-        .pill {
-            font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px;
-            cursor: pointer; border: 1.5px solid transparent; transition: all .2s;
-        }
-        .pill-safe     { color: #22c55e; border-color: rgba(34,197,94,.4); }
-        .pill-moderate { color: #f59e0b; border-color: rgba(245,158,11,.4); }
-        .pill-dangerous{ color: #ef4444; border-color: rgba(239,68,68,.4); }
-        .pill-unknown  { color: #94a3b8; border-color: rgba(148,163,184,.4); }
-        .pill.active-pill.pill-safe     { background: rgba(34,197,94,.2);  border-color: #22c55e; }
-        .pill.active-pill.pill-moderate { background: rgba(245,158,11,.2); border-color: #f59e0b; }
-        .pill.active-pill.pill-dangerous{ background: rgba(239,68,68,.2);  border-color: #ef4444; }
-        .pill.active-pill.pill-unknown  { background: rgba(148,163,184,.2);border-color: #94a3b8; }
-
-        /* Admin map */
-        #admin-map {
-            height: 420px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.15);
-        }
-
-        /* Toast */
-        #admin-toast {
-            position: fixed; bottom: 24px; right: 24px; z-index: 5000;
-            background: lightgreen; color: rgb(2,49,2);
-            font-weight: 700; font-size: 13px;
-            padding: 10px 18px; border-radius: 8px;
-            transform: translateY(80px); opacity: 0; transition: all .3s;
-        }
-        #admin-toast.show { transform: translateY(0); opacity: 1; }
-
-        .popup-badge {
-            display: inline-block; font-size: 11px; font-weight: 700;
-            padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
-            letter-spacing: .6px; margin-bottom: 6px;
-        }
-        .badge-safe     { background: #dcfce7; color: #15803d; }
-        .badge-moderate { background: #fef9c3; color: #b45309; }
-        .badge-dangerous{ background: #fee2e2; color: #b91c1c; }
-        .badge-unknown  { background: #f1f5f9; color: #475569; }
-
-        @keyframes pulse-ring {
-            0%   { transform: scale(.8); opacity: .8; }
-            70%  { transform: scale(2.2); opacity: 0; }
-            100% { transform: scale(.8); opacity: 0; }
-        }
-
-        @media (max-width: 768px) {
-            .admin-grid { grid-template-columns: 1fr; }
-            #admin-map  { height: 300px; }
-        }
-    </style>
 </head>
 <body>
 
-    <!-- Navbar Section -->
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar__container">
-            <a href="/" id="navbar__logo"> 
-                <i class="fa-solid fa-cloud-sun-rain"></i> <Strong>WEATHER</Strong>
+            <a href="/" id="navbar__logo">
+                <i class="fa-solid fa-cloud-sun-rain"></i> <strong>WEATHER</strong>
             </a>
             <div class="navbar__toggle" id="mobile-menu">
                 <span class="bar"></span>
@@ -112,7 +26,7 @@
             <ul class="navbar__menu">
                 <li class="navbar__item">
                     <a href="./index.html" class="navbar__links">
-                        <i class="fa-slab fa-regular fa-house"></i>
+                        <i class="fa-regular fa-house"></i>
                     </a>
                 </li>
                 <li class="navbar__item">
@@ -128,26 +42,23 @@
                 <li class="navbar__item">
                     <a href="/" class="navbar__links">About</a>
                 </li>
-                <li class="navbar__btn">
-                    <a href="./main.html" class="button">Log In</a>
-                </li>
             </ul>
         </div>
     </nav>
 
     <!-- Login Section -->
-<div class="main-login">
-        <div class="container"> 
+    <div class="main-login">
+        <div class="container">
             <div class="form-box login">
                 <form action="">
-                <h1>Admin Login</h1>
+                    <h1>Admin Login</h1>
                     <div class="input-box">
-                    <input type="text" placeholder="Username" id="username" required>
-                    <i class="fa-solid fa-user"></i>
+                        <input type="text" placeholder="Username" id="username" required>
+                        <i class="fa-solid fa-user"></i>
                     </div>
                     <div class="input-box">
                         <input type="text" placeholder="Password" id="password" required>
-                        <i class="fa-solid fa-eye" id="toggle-passwordeye" style="cursor: pointer;"></i>
+                        <i class="fa-solid fa-eye" id="toggle-passwordeye" style="cursor:pointer;"></i>
                     </div>
                     <div class="forgot-link">
                         <a href="#" id="forgot">Forgot Password?</a>
@@ -156,168 +67,42 @@
                 </form>
             </div>
 
-            
-            
             <div class="form-box reset">
                 <form action="">
-                <h1>Reset Password</h1>
+                    <h1>Reset Password</h1>
                     <div class="input-box">
                         <input type="text" placeholder="Enter Code" id="reset-code" required>
-                        <i class="fa-solid fa-key" id="toggle-passwordcode" style="cursor: pointer;"></i>
+                        <i class="fa-solid fa-key" id="toggle-passwordcode" style="cursor:pointer;"></i>
                     </div>
                     <div class="input-box">
                         <input type="text" placeholder="New Password" id="new-password" required>
-                        <i class="fa-solid fa-unlock" id="toggle-newpasswordlock" style="cursor: pointer;"></i>
+                        <i class="fa-solid fa-unlock" id="toggle-newpasswordlock" style="cursor:pointer;"></i>
                     </div>
                     <div class="input-box">
                         <input type="text" placeholder="Confirm Password" id="confirm-password" required>
-                        <i class="fa-solid fa-unlock" id="toggle-conpasswordlock" style="cursor: pointer;"></i>
+                        <i class="fa-solid fa-unlock" id="toggle-conpasswordlock" style="cursor:pointer;"></i>
                     </div>
                     <div class="forgot-link">
                         <a href="#" id="back-to-login">Back to Login</a>
                     </div>
-                        <button type="submit" id="subbtn" class="btn">Submit</button>
+                    <button type="submit" id="subbtn" class="btn">Submit</button>
                 </form>
             </div>
 
-        <div class="toggle-box">
-            <div class="toggle-panel toggle-left">
-                <h1>Hello, Welcome Admin!</h1>
-                <p>This is for only Admin Official.</p>
-            </div>
-            <div class="toggle-panel toggle-right">
-                <h1>Hello, Forgot the password?</h1>
-                <p>This is for only Admin Official.</p>
+            <div class="toggle-box">
+                <div class="toggle-panel toggle-left">
+                    <h1>Hello, Welcome Admin!</h1>
+                    <p>This is for only Admin Official.</p>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Hello, Forgot the password?</h1>
+                    <p>This is for only Admin Official.</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-    <!-- example -->
-
-    <!-- Admin POI Control Panel (shown after login) -->
-    <div id="admin-panel">
-        <h2>🗺️ Flood Status Control Panel</h2>
-        <p>Click a location to fly to it on the map. Use the status buttons to update flood conditions.</p>
-        <div class="admin-grid">
-            <div class="poi-sidebar" id="admin-poi-list"></div>
-            <div id="admin-map"></div>
-        </div>
-    </div>
-
-    <div id="admin-toast"></div>
-
-
-
-    <script src="app.js"></script>
-    <script src="login.js"></script>
     <script src="messages.js"></script>
-    <script>
-        // ── POI Data ──
-        const DEFAULT_POIS = [
-            { id: 'covered-court', name: 'Patas Covered Court', lat: 13.342169, lng: 121.117836, status: 'unknown', desc: 'Covered court area. Monitor water level near vicinity.' },
-            { id: 'tahik-b',       name: 'Tahik B',                lat: 13.336947, lng: 121.117968, status: 'unknown', desc: 'Tahik B sitio area. Monitor water level near vicinity.' },
-            { id: 'elem-school',   name: 'Patas Elementary School', lat: 13.340339, lng: 121.122443, status: 'unknown', desc: 'Patas Elementary School. Designated evacuation center.' }
-        ];
-
-        function getPOIs() {
-            try { const s = localStorage.getItem('ligtas_patas_pois'); return s ? JSON.parse(s) : DEFAULT_POIS; }
-            catch { return DEFAULT_POIS; }
-        }
-        function savePOIs(pois) { localStorage.setItem('ligtas_patas_pois', JSON.stringify(pois)); }
-
-        const STATUS_COLOR = { safe:'#22c55e', moderate:'#f59e0b', dangerous:'#ef4444', unknown:'#64748b' };
-        const STATUS_LABEL = { safe:'Safe', moderate:'Moderate', dangerous:'Dangerous', unknown:'Unknown' };
-
-        let adminMap, markerMap = {}, pois = [];
-
-        // Called by login.js after successful login — hooked below
-        function initAdminPanel() {
-            document.querySelector('.main-login').style.display = 'none';
-            document.getElementById('admin-panel').style.display = 'block';
-            pois = getPOIs();
-
-            adminMap = L.map('admin-map', { center: [13.338, 121.119], zoom: 16 });
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors', maxZoom: 19
-            }).addTo(adminMap);
-            adminMap.setMaxBounds(L.latLngBounds([13.332,121.113],[13.346,121.128]).pad(.05));
-
-            renderAll();
-        }
-
-        function makeIcon(status) {
-            const c = STATUS_COLOR[status] || '#64748b';
-            const pulse = status === 'dangerous'
-                ? `<div style="position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;width:28px;height:28px;border-radius:50%;background:${c};opacity:.3;animation:pulse-ring 1.8s infinite"></div>` : '';
-            return L.divIcon({
-                html: `<div style="position:relative;width:36px;height:36px">${pulse}<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" style="width:36px;height:36px"><circle cx="18" cy="18" r="10" fill="${c}" opacity=".25"/><circle cx="18" cy="18" r="7" fill="${c}"/><circle cx="18" cy="18" r="3.5" fill="white"/></svg></div>`,
-                className:'', iconSize:[36,36], iconAnchor:[18,18], popupAnchor:[0,-22]
-            });
-        }
-
-        function badgeClass(s) { return {safe:'badge-safe',moderate:'badge-moderate',dangerous:'badge-dangerous',unknown:'badge-unknown'}[s]||'badge-unknown'; }
-
-        function renderAll() { renderSidebar(); renderMarkers(); }
-
-        function renderSidebar() {
-            const list = document.getElementById('admin-poi-list');
-            list.innerHTML = '';
-            pois.forEach(poi => {
-                const card = document.createElement('div');
-                card.className = 'poi-card';
-                card.id = 'card-' + poi.id;
-                card.innerHTML = `
-                    <div class="poi-card-name">${poi.name}</div>
-                    <div class="poi-card-coords">${poi.lat.toFixed(6)}, ${poi.lng.toFixed(6)}</div>
-                    <div class="status-pills">
-                        ${['safe','moderate','dangerous','unknown'].map(s =>
-                            `<span class="pill pill-${s} ${poi.status===s?'active-pill':''}"
-                                onclick="setStatus('${poi.id}','${s}',event)">${STATUS_LABEL[s]}</span>`
-                        ).join('')}
-                    </div>`;
-                card.addEventListener('click', () => {
-                    adminMap.flyTo([poi.lat, poi.lng], 17, { duration: .8 });
-                    markerMap[poi.id]?.openPopup();
-                    document.querySelectorAll('.poi-card').forEach(c => c.classList.remove('active'));
-                    card.classList.add('active');
-                });
-                list.appendChild(card);
-            });
-        }
-
-        function renderMarkers() {
-            Object.values(markerMap).forEach(m => adminMap.removeLayer(m));
-            markerMap = {};
-            pois.forEach(poi => {
-                const m = L.marker([poi.lat, poi.lng], { icon: makeIcon(poi.status) })
-                    .addTo(adminMap)
-                    .bindPopup(`<div style="min-width:190px;padding:4px">
-                        <strong style="font-size:14px">${poi.name}</strong><br>
-                        <span class="popup-badge ${badgeClass(poi.status)}">${STATUS_LABEL[poi.status]}</span>
-                        <p style="font-size:12px;color:#555">${poi.desc}</p>
-                    </div>`, { maxWidth: 240 });
-                markerMap[poi.id] = m;
-            });
-        }
-
-        function setStatus(id, status, e) {
-            e.stopPropagation();
-            pois = pois.map(p => p.id === id ? { ...p, status } : p);
-            savePOIs(pois);
-            renderAll();
-            showToast('Status updated → ' + STATUS_LABEL[status]);
-        }
-
-        function showToast(msg) {
-            const t = document.getElementById('admin-toast');
-            t.textContent = msg;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 2800);
-        }
-
-        // ── Login.js calls initAdminPanel() directly after successful auth ──
-    
-    </script>
+    <script src="login.js"></script>
 </body>
 </html>

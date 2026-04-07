@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
-        /* Map replaces the old home image area */
+        /* ── User map ── */
         #patas-map {
             width: 100%;
             height: 75vh;
@@ -22,22 +22,96 @@
             margin-top: 1rem;
         }
 
-        /* Status badge inside popups */
-        .popup-badge {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: .6px;
-            margin-bottom: 8px;
+        /* ── Admin panel ── */
+        #admin-panel {
+            display: none;
+            padding: 30px 40px;
+            background: rgb(2,49,2);
+            color: white;
+            min-height: calc(100vh - 70px);
         }
-        .badge-safe     { background: #dcfce7; color: #15803d; }
-        .badge-moderate { background: #fef9c3; color: #b45309; }
-        .badge-dangerous{ background: #fee2e2; color: #b91c1c; }
-        .badge-unknown  { background: #f1f5f9; color: #475569; }
+        #admin-panel h2 { font-size: 1.8rem; margin-bottom: 6px; color: lightgreen; }
+        #admin-panel > p { color: #aaa; margin-bottom: 24px; font-size: 0.95rem; }
 
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .poi-sidebar { display: flex; flex-direction: column; gap: 14px; }
+
+        .poi-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: border-color .2s;
+        }
+        .poi-card:hover  { border-color: lightgreen; }
+        .poi-card.active { border-color: lightgreen; background: rgba(144,238,144,0.08); }
+
+        .poi-card-name   { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+        .poi-card-coords { font-size: 11px; color: #888; margin-bottom: 10px; }
+
+        .status-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+        .pill {
+            font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px;
+            cursor: pointer; border: 1.5px solid transparent; transition: all .2s;
+        }
+        .pill-safe      { color: #22c55e; border-color: rgba(34,197,94,.4); }
+        .pill-moderate  { color: #f59e0b; border-color: rgba(245,158,11,.4); }
+        .pill-dangerous { color: #ef4444; border-color: rgba(239,68,68,.4); }
+        .pill-unknown   { color: #94a3b8; border-color: rgba(148,163,184,.4); }
+        .pill.active-pill.pill-safe      { background: rgba(34,197,94,.2);   border-color: #22c55e; }
+        .pill.active-pill.pill-moderate  { background: rgba(245,158,11,.2);  border-color: #f59e0b; }
+        .pill.active-pill.pill-dangerous { background: rgba(239,68,68,.2);   border-color: #ef4444; }
+        .pill.active-pill.pill-unknown   { background: rgba(148,163,184,.2); border-color: #94a3b8; }
+
+        #admin-map {
+            height: 420px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        #admin-toast {
+            position: fixed; bottom: 24px; right: 24px; z-index: 5000;
+            background: lightgreen; color: rgb(2,49,2);
+            font-weight: 700; font-size: 13px;
+            padding: 10px 18px; border-radius: 8px;
+            transform: translateY(80px); opacity: 0; transition: all .3s;
+        }
+        #admin-toast.show { transform: translateY(0); opacity: 1; }
+
+        /* ── Shared badge styles ── */
+        .popup-badge {
+            display: inline-block; font-size: 11px; font-weight: 700;
+            padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+            letter-spacing: .6px; margin-bottom: 6px;
+        }
+        .badge-safe      { background: #dcfce7; color: #15803d; }
+        .badge-moderate  { background: #fef9c3; color: #b45309; }
+        .badge-dangerous { background: #fee2e2; color: #b91c1c; }
+        .badge-unknown   { background: #f1f5f9; color: #475569; }
+
+        /* ── User map legend ── */
+        .map-legend {
+            background: rgba(2,49,2,0.92);
+            color: white; padding: 10px 14px; border-radius: 8px;
+            font-size: 12px; line-height: 2;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .map-legend h4 {
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; color: lightgreen; margin-bottom: 4px;
+        }
+        .legend-dot {
+            display: inline-block; width: 10px; height: 10px;
+            border-radius: 50%; margin-right: 6px;
+        }
         .popup-report-btn {
             display: block; margin-top: 10px; text-align: center;
             background: rgb(2,49,2); color: white; text-decoration: none;
@@ -45,45 +119,26 @@
         }
         .popup-report-btn:hover { background: green; }
 
-        /* Legend */
-        .map-legend {
-            background: rgba(2,49,2,0.92);
-            color: white;
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-size: 12px;
-            line-height: 2;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .map-legend h4 {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: lightgreen;
-            margin-bottom: 4px;
-        }
-        .legend-dot {
-            display: inline-block;
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            margin-right: 6px;
-        }
-
         @keyframes pulse-ring {
             0%   { transform: scale(.8); opacity: .8; }
             70%  { transform: scale(2.2); opacity: 0; }
             100% { transform: scale(.8); opacity: 0; }
         }
+
+        @media (max-width: 768px) {
+            .admin-grid { grid-template-columns: 1fr; }
+            #admin-map  { height: 300px; }
+            #admin-panel { padding: 20px 16px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Navbar Section -->
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar__container">
-            <a href="/" id="navbar__logo"> 
-                <i class="fa-solid fa-cloud-sun-rain"></i> <Strong>WEATHER</Strong>
+            <a href="/" id="navbar__logo">
+                <i class="fa-solid fa-cloud-sun-rain"></i> <strong>WEATHER</strong>
             </a>
             <div class="navbar__toggle" id="mobile-menu">
                 <span class="bar"></span>
@@ -93,7 +148,7 @@
             <ul class="navbar__menu">
                 <li class="navbar__item">
                     <a href="./index.html" class="navbar__links">
-                        <i class="fa-slab fa-regular fa-house"></i>
+                        <i class="fa-regular fa-house"></i>
                     </a>
                 </li>
                 <li class="navbar__item">
@@ -110,28 +165,47 @@
                     <a href="/" class="navbar__links">About</a>
                 </li>
                 <li class="navbar__btn">
-                    <a href="./main.html" class="button" id="loginBtn" >Log In</a>
+                    <!-- Shown to regular users -->
+                    <a href="./adminlogin.html" class="button" id="loginBtn">Log In</a>
+                </li>
+                <li class="navbar__btn" style="display:none;" id="logoutBtn">
+                    <!-- Shown to admin only — app.js handles show/hide -->
+                    <a href="#" class="button" style="background:#2ecc71;color:#022;cursor:pointer;" onclick="localStorage.removeItem('isAdminLoggedIn'); window.location.href='./index.html';">
+                        <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                    </a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-- Home Section -->
-    <div class="home"> 
+    <!-- ══ USER VIEW ══ -->
+    <div class="home" id="user-view">
         <div class="home__container">
             <div class="home__content">
                 <h1>Ligtas-Patas Flood Monitoring</h1>
             </div>
-            <!-- Interactive Map replaces static image -->
             <div id="patas-map"></div>
         </div>
     </div>
 
+    <!-- ══ ADMIN PANEL (hidden until admin logs in) ══ -->
+    <div id="admin-panel">
+        <h2>🗺️ Flood Status Control Panel</h2>
+        <p>Click a location to fly to it on the map. Use the status buttons to update flood conditions.</p>
+        <div class="admin-grid">
+            <div class="poi-sidebar" id="admin-poi-list"></div>
+            <div id="admin-map"></div>
+        </div>
+    </div>
+
+    <div id="admin-toast"></div>
+
     <script src="app.js"></script>
     <script src="messages.js"></script>
-    <script src="login.js"></script>
     <script>
-        // ── Default POI data (shared with admin via localStorage) ──
+        // ══════════════════════════════════════════
+        //  Shared POI data (admin writes, user reads)
+        // ══════════════════════════════════════════
         const DEFAULT_POIS = [
             { id: 'covered-court', name: 'Patas Covered Court',     lat: 13.342169, lng: 121.117836, status: 'unknown', desc: 'Covered court area. Monitor water level near vicinity.' },
             { id: 'tahik-b',       name: 'Tahik B',                 lat: 13.336947, lng: 121.117968, status: 'unknown', desc: 'Tahik B sitio area. Monitor water level near vicinity.' },
@@ -142,45 +216,18 @@
             try { const s = localStorage.getItem('ligtas_patas_pois'); return s ? JSON.parse(s) : DEFAULT_POIS; }
             catch { return DEFAULT_POIS; }
         }
+        function savePOIs(pois) { localStorage.setItem('ligtas_patas_pois', JSON.stringify(pois)); }
 
-        // ── Map init ──
-        const map = L.map('patas-map', {
-            center: [13.338, 121.119],
-            zoom: 16
-        });
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors',
-            maxZoom: 19
-        }).addTo(map);
-
-        // Lock map to Patas area only
-        map.setMaxBounds(L.latLngBounds([13.332, 121.113], [13.346, 121.128]).pad(0.05));
-
-        // ── Legend ──
-        const legend = L.control({ position: 'bottomleft' });
-        legend.onAdd = function() {
-            const div = L.DomUtil.create('div', 'map-legend');
-            div.innerHTML = `<h4>Flood Status</h4>
-                <div><span class="legend-dot" style="background:#22c55e"></span>Safe</div>
-                <div><span class="legend-dot" style="background:#f59e0b"></span>Moderate</div>
-                <div><span class="legend-dot" style="background:#ef4444"></span>Dangerous</div>
-                <div><span class="legend-dot" style="background:#64748b"></span>Unknown</div>`;
-            return div;
-        };
-        legend.addTo(map);
-
-        // ── Marker helpers ──
         const STATUS_COLOR = { safe:'#22c55e', moderate:'#f59e0b', dangerous:'#ef4444', unknown:'#64748b' };
         const STATUS_LABEL = { safe:'Safe', moderate:'Moderate', dangerous:'Dangerous', unknown:'Unknown' };
 
         function makeIcon(status) {
             const c = STATUS_COLOR[status] || '#64748b';
             const pulse = status === 'dangerous'
-               ? `<div style="position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;width:28px;height:28px;border-radius:50%;background:${c};opacity:.3;animation:pulse-ring 1.8s infinite"></div>` : '';
+                ? `<div style="position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;width:28px;height:28px;border-radius:50%;background:${c};opacity:.3;animation:pulse-ring 1.8s infinite"></div>` : '';
             return L.divIcon({
                 html: `<div style="position:relative;width:36px;height:36px">${pulse}<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" style="width:36px;height:36px"><circle cx="18" cy="18" r="10" fill="${c}" opacity=".25"/><circle cx="18" cy="18" r="7" fill="${c}"/><circle cx="18" cy="18" r="3.5" fill="white"/></svg></div>`,
-                className: '', iconSize:[36,36], iconAnchor:[18,18], popupAnchor:[0,-22]
+                className:'', iconSize:[36,36], iconAnchor:[18,18], popupAnchor:[0,-22]
             });
         }
 
@@ -188,31 +235,139 @@
             return { safe:'badge-safe', moderate:'badge-moderate', dangerous:'badge-dangerous', unknown:'badge-unknown' }[s] || 'badge-unknown';
         }
 
-        // ── Render markers ──
-        let markerMap = {};
+        // ══════════════════════════════════════════
+        //  Decide which view to show
+        // ══════════════════════════════════════════
+        const adminLoggedIn = localStorage.getItem("isAdminLoggedIn") === "true";
 
-        function renderMarkers() {
-            Object.values(markerMap).forEach(m => map.removeLayer(m));
+        if (adminLoggedIn) {
+            document.getElementById('user-view').style.display   = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+            setTimeout(initAdminPanel, 150);
+        } else {
+            initUserMap();
+        }
+
+        // ══════════════════════════════════════════
+        //  USER MAP
+        // ══════════════════════════════════════════
+        function initUserMap() {
+            const map = L.map('patas-map', { center: [13.338, 121.119], zoom: 16 });
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors', maxZoom: 19
+            }).addTo(map);
+            map.setMaxBounds(L.latLngBounds([13.332,121.113],[13.346,121.128]).pad(0.05));
+
+            const legend = L.control({ position: 'bottomleft' });
+            legend.onAdd = function() {
+                const div = L.DomUtil.create('div', 'map-legend');
+                div.innerHTML = `<h4>Flood Status</h4>
+                    <div><span class="legend-dot" style="background:#22c55e"></span>Safe</div>
+                    <div><span class="legend-dot" style="background:#f59e0b"></span>Moderate</div>
+                    <div><span class="legend-dot" style="background:#ef4444"></span>Dangerous</div>
+                    <div><span class="legend-dot" style="background:#64748b"></span>Unknown</div>`;
+                return div;
+            };
+            legend.addTo(map);
+
+            let markerMap = {};
+            function renderMarkers() {
+                Object.values(markerMap).forEach(m => map.removeLayer(m));
+                markerMap = {};
+                getPOIs().forEach(poi => {
+                    const m = L.marker([poi.lat, poi.lng], { icon: makeIcon(poi.status) })
+                        .addTo(map)
+                        .bindPopup(`<div style="min-width:200px;padding:4px">
+                            <strong style="font-size:14px">${poi.name}</strong><br>
+                            <span class="popup-badge ${badgeClass(poi.status)}">${STATUS_LABEL[poi.status]}</span>
+                            <p style="font-size:12px;color:#555;margin-bottom:4px">${poi.desc}</p>
+                            <a class="popup-report-btn" href="reports.html?loc=${encodeURIComponent(poi.name)}">Submit a Report</a>
+                        </div>`, { maxWidth: 260 });
+                    markerMap[poi.id] = m;
+                });
+            }
+            renderMarkers();
+
+            // Live sync when admin changes status in another tab
+            window.addEventListener('storage', e => {
+                if (e.key === 'ligtas_patas_pois') renderMarkers();
+            });
+        }
+
+        // ══════════════════════════════════════════
+        //  ADMIN PANEL
+        // ══════════════════════════════════════════
+        let adminMap, markerMap = {}, pois = [];
+
+        function initAdminPanel() {
+            pois = getPOIs();
+
+            adminMap = L.map('admin-map', { center: [13.338, 121.119], zoom: 16 });
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors', maxZoom: 19
+            }).addTo(adminMap);
+            adminMap.setMaxBounds(L.latLngBounds([13.332,121.113],[13.346,121.128]).pad(.05));
+
+            renderAll();
+        }
+
+        function renderAll() { renderSidebar(); renderAdminMarkers(); }
+
+        function renderSidebar() {
+            const list = document.getElementById('admin-poi-list');
+            list.innerHTML = '';
+            pois.forEach(poi => {
+                const card = document.createElement('div');
+                card.className = 'poi-card';
+                card.id = 'card-' + poi.id;
+                card.innerHTML = `
+                    <div class="poi-card-name">${poi.name}</div>
+                    <div class="poi-card-coords">${poi.lat.toFixed(6)}, ${poi.lng.toFixed(6)}</div>
+                    <div class="status-pills">
+                        ${['safe','moderate','dangerous','unknown'].map(s =>
+                            `<span class="pill pill-${s} ${poi.status===s?'active-pill':''}"
+                                onclick="setStatus('${poi.id}','${s}',event)">${STATUS_LABEL[s]}</span>`
+                        ).join('')}
+                    </div>`;
+                card.addEventListener('click', () => {
+                    adminMap.flyTo([poi.lat, poi.lng], 17, { duration: .8 });
+                    markerMap[poi.id]?.openPopup();
+                    document.querySelectorAll('.poi-card').forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                });
+                list.appendChild(card);
+            });
+        }
+
+        function renderAdminMarkers() {
+            Object.values(markerMap).forEach(m => adminMap.removeLayer(m));
             markerMap = {};
-            getPOIs().forEach(poi => {
+            pois.forEach(poi => {
                 const m = L.marker([poi.lat, poi.lng], { icon: makeIcon(poi.status) })
-                    .addTo(map)
-                    .bindPopup(`<div style="min-width:200px;padding:4px">
+                    .addTo(adminMap)
+                    .bindPopup(`<div style="min-width:190px;padding:4px">
                         <strong style="font-size:14px">${poi.name}</strong><br>
                         <span class="popup-badge ${badgeClass(poi.status)}">${STATUS_LABEL[poi.status]}</span>
-                        <p style="font-size:12px;color:#555;margin-bottom:4px">${poi.desc}</p>
-                        <a class="popup-report-btn" href="reports.html?loc=${encodeURIComponent(poi.name)}">Submit a Report</a>
-                    </div>`, { maxWidth: 260 });
+                        <p style="font-size:12px;color:#555">${poi.desc}</p>
+                    </div>`, { maxWidth: 240 });
                 markerMap[poi.id] = m;
             });
         }
 
-        renderMarkers();
+        function setStatus(id, status, e) {
+            e.stopPropagation();
+            pois = pois.map(p => p.id === id ? { ...p, status } : p);
+            savePOIs(pois);
+            renderAll();
+            showToast('Status updated → ' + STATUS_LABEL[status]);
+        }
 
-        // Live sync when admin changes status in another tab
-        window.addEventListener('storage', e => {
-            if (e.key === 'ligtas_patas_pois') renderMarkers();
-        });
+        function showToast(msg) {
+            const t = document.getElementById('admin-toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2800);
+        }
     </script>
 </body>
 </html>
