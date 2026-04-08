@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Status Reporting System</title>
+    <link rel="stylesheet" href="reports.css">
+    <script src="https://kit.fontawesome.com/d65d73018d.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet"> 
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a id="navbar__logo">
+                <i class="fa-brands fa-watchman-monitoring"></i> 
+                <strong class="logo-text">FLOOD MONITORING</strong>
+            </a>
+            <div class="navbar__toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="./index.html" class="navbar__links">
+                        <i class="fa-slab fa-regular fa-house"></i>
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/" class="navbar__links">
+                        <i class="fa-solid fa-phone"></i>
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="./reports.html" class="navbar__links">
+                        <i class="fa-solid fa-walkie-talkie"></i>
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="./about.html" class="navbar__links">About</a>
+                </li>
+                <li class="navbar__btn">
+                    <a href="./main.html" class="button" id="loginBtn">Log In</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+<div class="body">
+    <div class="container">
+        <header>
+            <h1>Barangay Patas Status Reporting System</h1>
+            <p>Report the status of your barangay in real-time.</p>
+        </header>
+
+        <main>
+            <section class="form-section">
+                <h2>Submit Status Report</h2>
+                <form id="reportForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="barangay">Barangay</label>
+                        <select id="barangay" name="barangay" required>
+                            <option value="">Select Place</option>
+                            <option value="Patas Covered Court">Patas Covered Court</option>
+                            <option value="Patas Elementary School">Patas Elementary School</option>
+                            <option value="Tahik B">Tahik B</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" name="status" required>
+                            <option value="">Select Status</option>
+                            <option value="Safe" id="safeadmin">Safe ✅</option>
+                            <option value="Needs Assistance">Needs Assistance ❗</option>
+                            <option value="Emergency">Emergency ⚠️</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Situation/Message</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Describe the current situation..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        Submit Report
+                    </button>
+                </form>
+            </section>
+
+            <section class="reports-section">
+                <h2>Recent Reports</h2>
+                <div id="reportsContainer" class="reports-container">
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+    <script src="messages.js"></script>
+    <script src="app.js"></script>
+    <script src="reports.js"></script>
+    
+
+
+</body>
+</html>

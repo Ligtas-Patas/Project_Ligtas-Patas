@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ligtas-Patas — Admin Login</title>
+    <link rel="stylesheet" href="loginstyle.css" />
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/d65d73018d.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a id="navbar__logo">
+                <i class="fa-brands fa-watchman-monitoring"></i> 
+                <strong class="logo-text">FLOOD MONITORING</strong>
+            </a>
+            <div class="navbar__toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="./index.html" class="navbar__links">
+                        <i class="fa-regular fa-house"></i>
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/" class="navbar__links">
+                        <i class="fa-solid fa-phone"></i>
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="./reports.html" class="navbar__links">
+                        <i class="fa-solid fa-walkie-talkie"></i>
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/" class="navbar__links">About</a>
+                </li>
+                <li class="navbar__btn">
+                    <a href="./main.html" class="button" id="loginBtn">Back</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Login Section -->
+    <div class="main-login">
+        <div class="container">
+            <div class="form-box login">
+                <form action="">
+                    <h1>Admin Login</h1>
+                    <div class="input-box">
+                        <input type="text" placeholder="Username" id="username" required>
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" placeholder="Password" id="password" required>
+                        <i class="fa-solid fa-eye" id="toggle-passwordeye" style="cursor:pointer;"></i>
+                    </div>
+                    <div class="forgot-link">
+                        <a href="#" id="forgot">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn" id="login">Login</button>
+                </form>
+            </div>
+
+            <div class="form-box reset">
+                <form action="">
+                    <h1>Reset Password</h1>
+                    <div class="input-box">
+                        <input type="text" placeholder="Enter Code" id="reset-code" required>
+                        <i class="fa-solid fa-key" id="toggle-passwordcode" style="cursor:pointer;"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" placeholder="New Password" id="new-password" required>
+                        <i class="fa-solid fa-unlock" id="toggle-newpasswordlock" style="cursor:pointer;"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" placeholder="Confirm Password" id="confirm-password" required>
+                        <i class="fa-solid fa-unlock" id="toggle-conpasswordlock" style="cursor:pointer;"></i>
+                    </div>
+                    <div class="forgot-link">
+                        <a href="#" id="back-to-login">Back to Login</a>
+                    </div>
+                    <button type="submit" id="subbtn" class="btn">Submit</button>
+                </form>
+            </div>
+
+            <div class="toggle-box">
+                <div class="toggle-panel toggle-left">
+                    <h1>Hello, Welcome Admin!</h1>
+                    <p>This is for only Admin Official.</p>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Hello, Forgot the password?</h1>
+                    <p>This is for only Admin Official.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="messages.js"></script>
+    <script src="login.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
