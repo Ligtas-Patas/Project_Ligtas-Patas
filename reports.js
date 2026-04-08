@@ -56,12 +56,23 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        const timestamp = new Date().toLocaleString('en-PH', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
         // Create report card
-        const reportCard = createReportCard(name, barangay, status, message, ++reportCounter);
+        const reportCard = createReportCard(name, barangay, status, message, ++reportCounter, timestamp);
         
-        // **POST TO TOP** - Most recent first (RECENT REPORTS)
+        // **POST TO TOP**
         reportsContainer.insertBefore(reportCard, reportsContainer.firstChild);
         
+        // Save to localStorage
+        saveReport({ id: reportCounter, name, barangay, status, message, timestamp });
+
         // Add "NEW" visual feedback
         setTimeout(() => {
             reportCard.classList.add('new-report');
@@ -71,44 +82,24 @@ document.addEventListener('DOMContentLoaded', function() {
             reportCard.style.position = 'relative';
             reportCard.appendChild(newBadge);
             
-            // Remove NEW badge after 5 seconds
             setTimeout(() => {
                 newBadge.remove();
                 reportCard.classList.remove('new-report');
             }, 5000);
         }, 100);
 
-        // Show success message
-        showSuccessMessage();
-
-        // Clear form
+        showMessage("✅ Report posted successfully!", "success");
         form.reset();
-
-        // Scroll to TOP of recent reports
-        reportsContainer.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start' 
-        });
+        reportsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    function createReportCard(name, barangay, status, message, id) {
+    function createReportCard(name, barangay, status, message, id, timestamp) {
         const reportCard = document.createElement('div');
         reportCard.className = `report-card status-${status.toLowerCase().replace(' ', '-')}`;
         reportCard.dataset.id = id;
 
-        const statusClass = status.toLowerCase().replace(' ', '-');
-        const formattedStatus = status.replace(' ', ' ');
-
-        const timestamp = new Date().toLocaleString('en-PH', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-
         reportCard.innerHTML = `
-            <div class="status-label">${formattedStatus}</div>
+            <div class="status-label">${status}</div>
             <div class="report-header">
                 <div class="report-name">${name}</div>
                 <div class="report-barangay">${barangay}</div>
@@ -119,62 +110,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button class="delete-btn" onclick="deleteReport(${id})">Delete</button>
             </div>
         `;
-
         return reportCard;
     }
 
-    function showSuccessMessage() {
-        // Create temporary success message
-        const successMsg = document.createElement('div');
-        successMsg.style.cssText = `
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: #27ae60;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-weight: 600;
-            z-index: 1000;
-            animation: slideIn 0.3s ease-out;
-            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.4);
-        `;
-        successMsg.textContent = '✅ Report posted successfully!';
-        document.body.appendChild(successMsg);
-
-        // Add slideIn animation
-        const animStyle = document.createElement('style');
-        animStyle.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-        `;
-        document.head.appendChild(animStyle);
-
-        // Remove after 3 seconds
-        setTimeout(() => {
-            successMsg.style.animation = 'fadeOut 0.3s ease-in';
-            setTimeout(() => successMsg.remove(), 300);
-        }, 3000);
+    // LocalStorage helpers
+    function saveReport(report) {
+        const reports = JSON.parse(localStorage.getItem('reports')) || [];
+        reports.unshift(report);
+        localStorage.setItem('reports', JSON.stringify(reports));
     }
 
-    // Global function for delete button
+    function loadReports() {
+        const reports = JSON.parse(localStorage.getItem('reports')) || [];
+        reports.forEach(r => {
+            const reportCard = createReportCard(r.name, r.barangay, r.status, r.message, r.id, r.timestamp);
+            reportsContainer.appendChild(reportCard);
+        });
+        reportCounter = reports.length;
+    }
+
+    function deleteReportFromStorage(id) {
+        let reports = JSON.parse(localStorage.getItem('reports')) || [];
+        reports = reports.filter(r => r.id !== id);
+        localStorage.setItem('reports', JSON.stringify(reports));
+    }
+
+    // Global delete
     window.deleteReport = function(id) {
         const reportCard = document.querySelector(`[data-id="${id}"]`);
         if (reportCard) {
             reportCard.style.animation = 'fadeOut 0.3s ease-out';
             setTimeout(() => {
                 reportCard.remove();
+                deleteReportFromStorage(id);
             }, 300);
         }
     };
+
+    // Load saved reports on page start
+    loadReports();
 });
 
-const menu = document.querySelector('#mobile-menu');
-const menuLinks = document.querySelector('.navbar__menu');
 
-menu.addEventListener('click', function() {
-    menu.classList.toggle('is-active');
-    menuLinks.classList.toggle('active');
-});
+  // Get query parameter from URL
+const params = new URLSearchParams(window.location.search);
+const loc = params.get("loc");
+
+if (loc) {
+    const barangaySelect = document.getElementById("barangay");
+    barangaySelect.value = loc; // Automatically select the matching option
+}
