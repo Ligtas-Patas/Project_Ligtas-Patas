@@ -98,6 +98,23 @@
         .badge-unknown   { background: #f1f5f9; color: #475569; }
 
         /* ── User map legend ── */
+        
+        .map-legend div {
+            display: flex;          /* keeps dot and text aligned */
+            align-items: center;    /* vertical centering */
+            margin: 2px 0;
+        }
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 8px;       /* small tab space before dot */
+    margin-right: 8px;      /* space between dot and text */
+    flex-shrink: 0;
+}
+
+
         .map-legend {
             background: rgba(2,49,2,0.92);
             color: white; padding: 10px 14px; border-radius: 8px;
@@ -109,15 +126,27 @@
             letter-spacing: 1px; color: lightgreen; margin-bottom: 4px;
         }
         .legend-dot {
-            display: inline-block; width: 10px; height: 10px;
-            border-radius: 50%; margin-right: 6px;
+            width: 10px; height: 10px; margin-left: 8px; margin-right: 8px;
+            flex-shrink: 0;
+            border-radius: 50%; margin: 0 8px 0 12px; vertical-align: middle;
         }
         .popup-report-btn {
             display: block; margin-top: 10px; text-align: center;
             background: rgb(2,49,2); color: white; text-decoration: none;
             padding: 6px 12px; border-radius: 5px; font-size: 12px; font-weight: 600;
         }
-        .popup-report-btn:hover { background: green; }
+        .popup-report-btn:hover { background: green;}
+
+        a.popup-report-btn,
+        a.popup-report-btn:visited,
+        a.popup-report-btn:active {
+            color: white;
+        }
+
+        a.popup-report-btn:hover{
+            color: black;
+        }
+
 
         @keyframes pulse-ring {
             0%   { transform: scale(.8); opacity: .8; }
@@ -138,7 +167,7 @@
     <nav class="navbar">
         <div class="navbar__container">
             <a href="/" id="navbar__logo">
-                <i class="fa-solid fa-cloud-sun-rain"></i> <strong>WEATHER</strong>
+                <i class="fa-brands fa-watchman-monitoring"></i> <strong>FLOOD MONITORING</strong>
             </a>
             <div class="navbar__toggle" id="mobile-menu">
                 <span class="bar"></span>
@@ -165,14 +194,7 @@
                     <a href="/" class="navbar__links">About</a>
                 </li>
                 <li class="navbar__btn">
-                    <!-- Shown to regular users -->
-                    <a href="./adminlogin.html" class="button" id="loginBtn">Log In</a>
-                </li>
-                <li class="navbar__btn" style="display:none;" id="logoutBtn">
-                    <!-- Shown to admin only — app.js handles show/hide -->
-                    <a href="#" class="button" style="background:#2ecc71;color:#022;cursor:pointer;" onclick="localStorage.removeItem('isAdminLoggedIn'); window.location.href='./index.html';">
-                        <i class="fa-solid fa-right-from-bracket"></i> Log Out
-                    </a>
+                    <a href="./main.html" class="button" id="loginBtn">Log In</a>
                 </li>
             </ul>
         </div>
