@@ -316,10 +316,13 @@ body {
   margin-top: 20px;          
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
+  max-width: 300px;
 }
 
 .org-logo {
-  width: 57px;              
+  width: 57px;
+  max-width: 100%;
   height: auto;
   object-fit: contain;
 }
