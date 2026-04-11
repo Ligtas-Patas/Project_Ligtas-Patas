@@ -1,0 +1,202 @@
+/* ── User map ── */
+        #patas-map {
+            width: 100%;
+            height: 75vh;
+            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.15);
+            margin-top: 1rem;
+        }
+
+        /* ── Admin panel ── */
+        #admin-panel {
+            display: none;
+            padding: 30px 40px;
+            background: rgb(2,49,2);
+            color: white;
+            min-height: calc(100vh - 70px);
+        }
+        #admin-panel h2 { font-size: 1.8rem; margin-bottom: 6px; color: lightgreen; }
+        #admin-panel > p { color: #aaa; margin-bottom: 24px; font-size: 0.95rem; }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .poi-sidebar { display: flex; flex-direction: column; gap: 14px; }
+
+        .poi-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: border-color .2s;
+        }
+        .poi-card:hover  { border-color: lightgreen; }
+        .poi-card.active { border-color: lightgreen; background: rgba(144,238,144,0.08); }
+
+        .poi-card-name   { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+        .poi-card-coords { font-size: 11px; color: #888; margin-bottom: 10px; }
+
+        .status-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+        .pill {
+            font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px;
+            cursor: pointer; border: 1.5px solid transparent; transition: all .2s;
+        }
+        .pill-safe      { color: #22c55e; border-color: rgba(34,197,94,.4); }
+        .pill-moderate  { color: #f59e0b; border-color: rgba(245,158,11,.4); }
+        .pill-dangerous { color: #ef4444; border-color: rgba(239,68,68,.4); }
+        .pill-unknown   { color: #94a3b8; border-color: rgba(148,163,184,.4); }
+        .pill.active-pill.pill-safe      { background: rgba(34,197,94,.2);   border-color: #22c55e; }
+        .pill.active-pill.pill-moderate  { background: rgba(245,158,11,.2);  border-color: #f59e0b; }
+        .pill.active-pill.pill-dangerous { background: rgba(239,68,68,.2);   border-color: #ef4444; }
+        .pill.active-pill.pill-unknown   { background: rgba(148,163,184,.2); border-color: #94a3b8; }
+
+        #admin-map {
+            height: 420px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        #admin-toast {
+            position: fixed; top: 24px; right: 24px; z-index: 5000;
+            background: lightgreen; color: rgb(2,49,2);
+            font-weight: 700; font-size: 13px;
+            padding: 10px 18px; border-radius: 8px;
+            transform: translateY(-80px); opacity: 0; transition: all .3s;
+        }
+        #admin-toast.show { transform: translateY(0); opacity: 1; }
+
+        .testgen-card {
+            max-width: 1200px;
+            margin: 18px auto 0;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+        .testgen-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: lightgreen;
+            margin-bottom: 8px;
+        }
+        .testgen-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        .testgen-input {
+            width: 120px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            padding: 8px 10px;
+        }
+        .testgen-btn {
+            border: 0;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity .2s;
+        }
+        .testgen-btn:hover { opacity: 0.9; }
+        .testgen-btn-generate { background: #22c55e; color: rgb(2,49,2); }
+        .testgen-btn-start { background: #f59e0b; color: #222; }
+        .testgen-btn-stop { background: #ef4444; color: white; }
+        .testgen-status {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #d1d5db;
+        }
+
+        /* ── Shared badge styles ── */
+        .popup-badge {
+            display: inline-block; font-size: 11px; font-weight: 700;
+            padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+            letter-spacing: .6px; margin-bottom: 6px;
+        }
+        .badge-safe      { background: #dcfce7; color: #15803d; }
+        .badge-moderate  { background: #fef9c3; color: #b45309; }
+        .badge-dangerous { background: #fee2e2; color: #b91c1c; }
+        .badge-unknown   { background: #f1f5f9; color: #475569; }
+
+        /* ── User map legend ── */
+        
+        .map-legend div {
+            display: flex;          /* keeps dot and text aligned */
+            align-items: center;    /* vertical centering */
+            margin: 2px 0;
+        }
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 8px;       /* small tab space before dot */
+    margin-right: 8px;      /* space between dot and text */
+    flex-shrink: 0;
+}
+
+
+        .map-legend {
+            background: rgba(2,49,2,0.92);
+            color: white; padding: 10px 14px; border-radius: 8px;
+            font-size: 12px; line-height: 2;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .map-legend h4 {
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; color: lightgreen; margin-bottom: 4px;
+        }
+        .legend-dot {
+            width: 10px; height: 10px; margin-left: 8px; margin-right: 8px;
+            flex-shrink: 0;
+            border-radius: 50%; margin: 0 8px 0 12px; vertical-align: middle;
+        }
+        .popup-report-btn {
+            display: block; margin-top: 10px; text-align: center;
+            background: rgb(2,49,2); color: white; text-decoration: none;
+            padding: 6px 12px; border-radius: 5px; font-size: 12px; font-weight: 600;
+        }
+        .popup-report-btn:hover { background: green;}
+
+        a.popup-report-btn,
+        a.popup-report-btn:visited,
+        a.popup-report-btn:active {
+            color: white;
+        }
+
+        a.popup-report-btn:hover{
+            color: black;
+        }
+
+
+        @keyframes pulse-ring {
+            0%   { transform: scale(.8); opacity: .8; }
+            70%  { transform: scale(2.2); opacity: 0; }
+            100% { transform: scale(.8); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .admin-grid { grid-template-columns: 1fr; }
+            #admin-map  { height: 300px; }
+            #admin-panel { padding: 20px 16px; }
+        }
+#analytics-section {
+    background: rgb(2, 49, 2);
+    padding: 0 0 60px 0;
+    display: none;
+}
+#analytics-section .analytics-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+}

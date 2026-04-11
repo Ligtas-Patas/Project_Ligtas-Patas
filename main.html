@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ligtas-Patas</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
     <script src="https://kit.fontawesome.com/d65d73018d.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navbar Section -->
     <nav class="navbar">
         <div class="navbar__container">
-            <a id="navbar__logo">
-            <i class="fa-brands fa-watchman-monitoring"></i> 
+            <a id="navbar__logo" href="./index.html">
+            <i class="fa-brands fa-watchman-monitoring"></i>
             <strong class="logo-text">FLOOD MONITORING</strong>
         </a>
 
@@ -51,18 +50,15 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="main"> 
+    <div class="main">
         <div class="main__container">
             <div class="main__content">
                 <h1>FLOOD UPDATE</h1>
                 <h2>LIGTAS-PATAS</h2>
                 <p>Control Center Admin</p>
-                <button class="main__btn" id="adminLoginBtn"><a href="adminlogin.html"> <i class="fa-solid fa-right-to-bracket"></i> 
+                <a class="main__btn" id="adminLoginBtn" href="./adminlogin.html"><i class="fa-solid fa-right-to-bracket"></i>
                     <strong>ADMIN LOG IN</strong></a>
-                </button>
 
-                <!-- ── ADMIN INFO CARD + LOGOUT (shown only when logged in) ── -->
                 <div class="admin-card" id="adminCard" style="display:none;">
                     <div class="admin-label">🔐 Currently Logged In</div>
                     <div class="admin-name">👤 Admin</div>
@@ -72,18 +68,17 @@
                     </div>
                 </div>
 
-                <button class="logout-btn" id="logoutBtn" style="display:none;">
+                <button class="logout-btn" id="logoutBtn" style="display:none;" type="button">
                     <i class="fa-solid fa-right-from-bracket"></i> Log Out
                 </button>
             </div>
 
             <div class="main__img--container">
-                <img src="Maintenance.svg" alt="pic" id="main__img">
+                <img src="./assets/Maintenance.svg" alt="Maintenance illustration" id="main__img">
             </div>
         </div>
     </div>
 
-    <!-- Only load app.js here — login.js is only for adminlogin.html -->
-    <script src="app.js"></script>
-</body> 
+    <script src="./js/app.js"></script>
+</body>
 </html>
