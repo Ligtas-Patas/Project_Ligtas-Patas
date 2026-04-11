@@ -1,0 +1,208 @@
+/* ═══════════════════════════════════════════════════════════════════
+   ADMIN FEEDBACK SYSTEM  —  append to css/reports.css AND css/styles.css
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Feedback badge (visible to everyone on a report card) ─────────── */
+.feedback-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    margin-bottom: 20px;
+    /* tinted glass pill — same pattern as .report-barangay */
+    backdrop-filter: blur(6px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    animation: fbBadgeIn 0.35s ease-out;
+}
+
+@keyframes fbBadgeIn {
+    from { opacity: 0; transform: translateY(-6px) scale(0.92); }
+    to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+/* ── Admin toolbar on report cards (reports.html) ───────────────────── */
+.admin-feedback-toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+    padding: 16px 20px;
+    /* same glass surface as report-message */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    border-left: 4px solid rgba(50, 192, 50, 0.5);  /* green accent strip */
+}
+
+.admin-feedback-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-right: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Base — inherits the look of .delete-btn but smaller and neutral */
+.fb-btn {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.88rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.fb-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* Active / selected — each state gets its own gradient, same pattern as .main__btn */
+.fb-btn--active[data-fb="verified"] {
+    background: linear-gradient(to top, #1d4ed8, #60b4ff);
+    color: #021302;
+    box-shadow: 0 6px 20px rgba(96, 180, 255, 0.45);
+}
+.fb-btn--active[data-fb="responding"] {
+    background: linear-gradient(to top, #b45309, #fbbf24);
+    color: #021302;
+    box-shadow: 0 6px 20px rgba(251, 191, 36, 0.45);
+}
+.fb-btn--active[data-fb="completed"] {
+    background: linear-gradient(to top, green, lightgreen);   /* matches --green-gradient */
+    color: #021302;
+    box-shadow: 0 6px 20px rgba(144, 238, 144, 0.45);
+}
+
+/* Clear button — mirrors .delete-btn */
+.fb-btn--clear {
+    background: orangered;
+    color: white;
+    margin-left: auto;
+}
+.fb-btn--clear:hover {
+    background: darkred;
+    color: white;
+    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
+}
+
+/* ── Feed feedback badge (index.html report feed) ───────────────────── */
+.feed-fb-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* ── Admin toolbar inside the feed rows (index.html) ────────────────── */
+.feed-admin-toolbar {
+    display: none;
+    width: 100%;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 3px solid rgba(50, 192, 50, 0.5);
+    border-radius: 8px;
+}
+
+.dash-feed__row.is-expanded .feed-admin-toolbar {
+    display: flex;
+}
+
+.feed-admin-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-right: 4px;
+    flex-shrink: 0;
+}
+
+/* Same token as .fb-btn but scaled down for the compact feed */
+.feed-fb-btn {
+    padding: 7px 15px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.feed-fb-btn:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.feed-fb-btn--active[data-fb="verified"] {
+    background: linear-gradient(to top, #1d4ed8, #60b4ff);
+    color: #021302;
+    box-shadow: 0 4px 12px rgba(96, 180, 255, 0.4);
+}
+.feed-fb-btn--active[data-fb="responding"] {
+    background: linear-gradient(to top, #b45309, #fbbf24);
+    color: #021302;
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+}
+.feed-fb-btn--active[data-fb="completed"] {
+    background: linear-gradient(to top, green, lightgreen);
+    color: #021302;
+    box-shadow: 0 4px 12px rgba(144, 238, 144, 0.4);
+}
+
+.feed-fb-btn--clear {
+    background: orangered;
+    color: white;
+    margin-left: auto;
+}
+.feed-fb-btn--clear:hover {
+    background: darkred;
+    color: white;
+    box-shadow: 0 6px 18px rgba(255, 0, 0, 0.4);
+}
+
+/* ── Responsive tweaks ──────────────────────────────────────────────── */
+@media screen and (max-width: 600px) {
+    .admin-feedback-toolbar { gap: 8px; padding: 12px 14px; }
+    .fb-btn                 { padding: 8px 14px; font-size: 0.8rem; }
+    .feed-fb-btn            { padding: 6px 12px; font-size: 0.74rem; }
+}
