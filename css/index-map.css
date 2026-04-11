@@ -1,4 +1,8 @@
 /* ── User map ── */
+.leaflet-top.leaflet-right {
+    top: 90px !important; 
+}
+
 .leaflet-top.leaflet-left .leaflet-control-zoom {
     display: none !important;
 }
