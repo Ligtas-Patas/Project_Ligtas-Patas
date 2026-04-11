@@ -1,4 +1,7 @@
 /* ── User map ── */
+.leaflet-top.leaflet-left .leaflet-control-zoom {
+    display: none !important;
+}
         #patas-map {
             width: 100%;
             height: 75vh;
