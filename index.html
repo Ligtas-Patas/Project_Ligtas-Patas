@@ -1,192 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/styles.css" />
-    <link rel="stylesheet" href="./css/index-map.css" />
-    <link rel="stylesheet" href="./css/messages.css" />
-    <link rel="stylesheet" href="css/feedback-system.css">
-    <script src="https://kit.fontawesome.com/d65d73018d.js" crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <title>Home</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/index-map.css" />
+    <link rel="stylesheet" href="./css/messages.css" />
+    <link rel="stylesheet" href="css/feedback-system.css">
+    <script src="https://kit.fontawesome.com/d65d73018d.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="navbar__container">
-            <a id="navbar__logo" href="./index.html">
-                <i class="fa-brands fa-watchman-monitoring"></i>
-                <strong class="logo-text">FLOOD MONITORING</strong>
-            </a>
-            <div class="navbar__toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-            <ul class="navbar__menu">
-                <li class="navbar__item">
-                    <a href="./index.html" class="navbar__links">
-                        <i class="fa-regular fa-house"></i>
-                    </a>
-                </li>
-                <li class="navbar__item">
-                    <a href="./hotline.html" class="navbar__links">
-                        <i class="fa-solid fa-phone"></i>
-                    </a>
-                </li>
-                <li class="navbar__item">
-                    <a href="./reports.html" class="navbar__links">
-                        <i class="fa-solid fa-walkie-talkie"></i>
-                    </a>
-                </li>
-                <li class="navbar__item">
-                    <a href="./about.html" class="navbar__links">About</a>
-                </li>
-                <li class="navbar__btn">
-                    <a href="./main.html" class="button" id="loginBtn">Log In</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a id="navbar__logo" href="./index.html">
+                <i class="fa-brands fa-watchman-monitoring"></i>
+                <strong class="logo-text">FLOOD MONITORING</strong>
+            </a>
+            <div class="navbar__toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="./index.html" class="navbar__links">
+                        <i class="fa-regular fa-house"></i>
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="./hotline.html" class="navbar__links">
+                        <i class="fa-solid fa-phone"></i>
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="./reports.html" class="navbar__links">
+                        <i class="fa-solid fa-walkie-talkie"></i>
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="./about.html" class="navbar__links">About</a>
+                </li>
+                <li class="navbar__btn">
+                    <a href="./main.html" class="button" id="loginBtn">Log In</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <div class="home" id="user-view">
-        <div class="home__container">
-            <div class="home__content">
-                <h1>Ligtas-Patas Flood Monitoring</h1>
-            </div>
-            <div id="patas-map"></div>
-        </div>
-    </div>
+    <div class="home" id="user-view">
+        <div class="home__container">
+            <div class="home__content">
+                <h1>Ligtas-Patas Flood Monitoring</h1>
+            </div>
+            <div id="patas-map"></div>
+        </div>
+    </div>
 
-    <div id="admin-panel">
-        <h2>🗺️ Flood Status Control Panel</h2>
-        <p>Click a location to fly to it on the map. Use the status buttons to update flood conditions.</p>
-        <div class="admin-grid">
-            <div class="poi-sidebar" id="admin-poi-list"></div>
-            <div id="admin-map"></div>
-        </div>
-        <div class="testgen-card" id="testgen-panel">
-            <div class="testgen-title">Admin Test Report Generator</div>
-            <div class="testgen-controls">
-                <label for="testgen-count">Batch count:</label>
-                <input class="testgen-input" id="testgen-count" type="number" min="1" max="300" value="5">
-                <button class="testgen-btn testgen-btn-generate" id="testgen-generate-btn" type="button">Generate Batch</button>
-                <button class="testgen-btn testgen-btn-start" id="testgen-start-btn" type="button">Start Auto</button>
-                <button class="testgen-btn testgen-btn-stop" id="testgen-stop-btn" type="button">Stop Auto</button>
-                <button class="testgen-btn testgen-btn-stop" id="testgen-clear-reports" type="button">Clear Reports</button>
-            </div>
-            <div class="testgen-status" id="testgen-status">Auto generator: Stopped</div>
-        </div>
-    </div>
+    <div id="admin-panel">
+        <h2>🗺️ Flood Status Control Panel</h2>
+        <p>Click a location to fly to it on the map. Use the status buttons to update flood conditions.</p>
+        <div class="admin-grid">
+            <div class="poi-sidebar" id="admin-poi-list"></div>
+            <div id="admin-map"></div>
+        </div>
+        <div class="testgen-card" id="testgen-panel">
+            <div class="testgen-title">Admin Test Report Generator</div>
+            <div class="testgen-controls">
+                <label for="testgen-count">Batch count:</label>
+                <input class="testgen-input" id="testgen-count" type="number" min="1" max="300" value="5">
+                <button class="testgen-btn testgen-btn-generate" id="testgen-generate-btn" type="button">Generate Batch</button>
+                <button class="testgen-btn testgen-btn-start" id="testgen-start-btn" type="button">Start Auto</button>
+                <button class="testgen-btn testgen-btn-stop" id="testgen-stop-btn" type="button">Stop Auto</button>
+                <button class="testgen-btn testgen-btn-stop" id="testgen-clear-reports" type="button">Clear Reports</button>
+            </div>
+            <div class="testgen-status" id="testgen-status">Auto generator: Stopped</div>
+        </div>
+    </div>
 
-    <div id="admin-toast"></div>
+    <div id="admin-toast"></div>
 
-    <div id="analytics-section">
-        <div class="analytics-inner">
+    <div id="analytics-section">
+        <div class="analytics-inner">
 
-            <div class="dash-timeline-wrap">
-                <h3 class="dash-section-title dash-section-title--timeline">Activity timeline</h3>
-                <p class="dash-timeline-sub">Reports and map zone updates (newest first).</p>
-                <div class="dash-table-wrap dash-timeline-scroll">
-                    <table class="dash-table dash-timeline-table">
-                        <thead>
-                            <tr>
-                                <th class="th-time">Time</th>
-                                <th class="th-type">Type</th>
-                                <th>Details</th>
-                            </tr>
-                        </thead>
-                        <tbody id="activity-timeline-tbody">
-                            <tr><td colspan="3" class="dash-empty-row">No activity yet.</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <div class="dash-timeline-wrap">
+                <h3 class="dash-section-title dash-section-title--timeline">Activity timeline</h3>
+                <p class="dash-timeline-sub">Reports and map zone updates (newest first).</p>
+                <div class="dash-table-wrap dash-timeline-scroll">
+                    <table class="dash-table dash-timeline-table">
+                        <thead>
+                            <tr>
+                                <th class="th-time">Time</th>
+                                <th class="th-type">Type</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activity-timeline-tbody">
+                            <tr><td colspan="3" class="dash-empty-row">No activity yet.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-            <div class="dash-stat-row">
-                <div class="dash-card dash-card--total">
-                    <div class="dash-card__icon">📋</div>
-                    <div class="dash-card__num" id="stat-total">0</div>
-                    <div class="dash-card__label">Total Reports</div>
-                </div>
-                <div class="dash-card dash-card--safe">
-                    <div class="dash-card__icon">✅</div>
-                    <div class="dash-card__num" id="stat-safe">0</div>
-                    <div class="dash-card__label">Safe</div>
-                </div>
-                <div class="dash-card dash-card--assist">
-                    <div class="dash-card__icon">❗</div>
-                    <div class="dash-card__num" id="stat-assist">0</div>
-                    <div class="dash-card__label">Needs Assistance</div>
-                </div>
-                <div class="dash-card dash-card--emergency">
-                    <div class="dash-card__icon">⚠️</div>
-                    <div class="dash-card__num" id="stat-emergency">0</div>
-                    <div class="dash-card__label">Emergency</div>
-                </div>
-            </div>
+            <div class="dash-stat-row">
+                <div class="dash-card dash-card--total">
+                    <div class="dash-card__icon">📋</div>
+                    <div class="dash-card__num" id="stat-total">0</div>
+                    <div class="dash-card__label">Total Reports</div>
+                </div>
+                <div class="dash-card dash-card--safe">
+                    <div class="dash-card__icon">✅</div>
+                    <div class="dash-card__num" id="stat-safe">0</div>
+                    <div class="dash-card__label">Safe</div>
+                </div>
+                <div class="dash-card dash-card--assist">
+                    <div class="dash-card__icon">❗</div>
+                    <div class="dash-card__num" id="stat-assist">0</div>
+                    <div class="dash-card__label">Needs Assistance</div>
+                </div>
+                <div class="dash-card dash-card--emergency">
+                    <div class="dash-card__icon">⚠️</div>
+                    <div class="dash-card__num" id="stat-emergency">0</div>
+                    <div class="dash-card__label">Emergency</div>
+                </div>
+            </div>
 
-            <div class="dash-table-wrap">
-                <h3 class="dash-section-title">📍 Reports by Location</h3>
-                <table class="dash-table">
-                    <thead>
-                        <tr>
-                            <th>Location</th>
-                            <th>Total</th>
-                            <th class="th-safe">Safe</th>
-                            <th class="th-assist">Assistance</th>
-                            <th class="th-emergency">Emergency</th>
-                            <th>Last Report</th>
-                        </tr>
-                    </thead>
-                    <tbody id="location-tbody">
-                        <tr><td colspan="6" class="dash-empty-row">No reports yet.</td></tr>
-                    </tbody>
-                </table>
-            </div>
+            <div class="dash-table-wrap">
+                <h3 class="dash-section-title">📍 Reports by Location</h3>
+                <table class="dash-table">
+                    <thead>
+                        <tr>
+                            <th>Location</th>
+                            <th>Total</th>
+                            <th class="th-safe">Safe</th>
+                            <th class="th-assist">Assistance</th>
+                            <th class="th-emergency">Emergency</th>
+                            <th>Last Report</th>
+                        </tr>
+                    </thead>
+                    <tbody id="location-tbody">
+                        <tr><td colspan="6" class="dash-empty-row">No reports yet.</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <div class="dash-feed-wrap">
-                <h3 class="dash-section-title">🗂️ Report Feed</h3>
-                <div id="report-feed" class="dash-feed">
-                    <div class="dash-feed__empty">No reports submitted yet.</div>
-                </div>
-            </div>
-        </div>
-    </div>
+            <div class="dash-feed-wrap">
+                <h3 class="dash-section-title">🗂️ Report Feed</h3>
+                <div id="report-feed" class="dash-feed">
+                    <div class="dash-feed__empty">No reports submitted yet.</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div id="weather-modal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-icon">⚠️</div>
-        <h2>Weather Advisory</h2>
-        <p id="modal-msg">Heavy rains are currently affecting the area. Please stay alert and monitor flood levels.</p>
-        <button class="modal-btn" onclick="closeModal()">OKAY</button>
-    </div>
-</div>
-
-    <!-- ══ USER VIEW ══ -->
-    <div class="home" id="user-view">
-        <div class="home__container">
-            <div class="home__content">
-                <h1>Ligtas-Patas Flood Monitoring</h1>
-            </div>
-            <div class="map-weather-wrap">
-                <div id="patas-map"></div>
-                <canvas class="weather-canvas" id="user-weather-canvas"></canvas>
-                <button class="weather-toggle-btn" id="user-weather-btn" onclick="toggleWeather('user')">
-                    🌧️ Rain ON
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <script src="./js/storage.js"></script>
-    <script src="./js/app.js"></script>
-    <script src="./js/messages.js"></script>
-    <script src="./js/index-map.js"></script>
-    <script src="./js/generate.js"></script>
-    <script src="./js/dashboard.js"></script>
+    <script src="./js/storage.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/messages.js"></script>
+    <script src="./js/index-map.js"></script>
+    <script src="./js/generate.js"></script>
+    <script src="./js/dashboard.js"></script>
+</body>
+</html>
