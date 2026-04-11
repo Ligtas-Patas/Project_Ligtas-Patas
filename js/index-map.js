@@ -45,7 +45,7 @@
     }
 
     function initUserMap() {
-        var map = L.map('patas-map', { center: [13.339777, 121.119899], zoom: 15});
+        var map = L.map('patas-map', { center: [13.339777, 121.119899], zoom: 15, zoomControl: false});
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors', maxZoom: 19
         }).addTo(map);
@@ -97,7 +97,7 @@
     function initAdminPanel() {
         pois = getPOIs();
 
-        adminMap = L.map('admin-map', { center: [13.339777, 121.119899], zoom: 15});
+        adminMap = L.map('admin-map', { center: [13.339777, 121.119899], zoom: 15, zoomControl: false});
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors', maxZoom: 19
         }).addTo(adminMap);
