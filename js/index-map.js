@@ -50,7 +50,7 @@
             attribution: '© OpenStreetMap contributors', maxZoom: 19
         }).addTo(map);
         map.setMaxBounds(L.latLngBounds([13.332701,121.118374],[13.346492,121.123030]).pad(0.05));
-        L.control.zoom({ position: 'bottomright' }).addTo(adminMap);
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
         
         var legend = L.control({ position: 'bottomleft' });
         legend.onAdd = function () {
