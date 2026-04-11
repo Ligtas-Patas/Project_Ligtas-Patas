@@ -1,11 +1,16 @@
 /* ── User map ── */
-.leaflet-top.leaflet-right {
-    top: 90px !important; 
+
+#patas-map,
+#admin-map {
+    overflow: hidden !important;
+    position: relative;
+    z-index: 1;
 }
 
 .leaflet-top.leaflet-left .leaflet-control-zoom {
     display: none !important;
 }
+
         #patas-map {
             width: 100%;
             height: 75vh;
