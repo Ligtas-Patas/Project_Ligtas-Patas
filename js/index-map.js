@@ -45,11 +45,11 @@
     }
 
     function initUserMap() {
-        var map = L.map('patas-map', { center: [13.338, 121.119], zoom: 16 });
+        var map = L.map('patas-map', { center: [13.339777, 121.119899], zoom: 15 });
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors', maxZoom: 19
         }).addTo(map);
-        map.setMaxBounds(L.latLngBounds([13.332, 121.113], [13.346, 121.128]).pad(0.05));
+        map.setMaxBounds(L.latLngBounds([13.332701,121.118374],[13.346492,121.123030]).pad(0.05));
 
         var legend = L.control({ position: 'bottomleft' });
         legend.onAdd = function () {
@@ -96,11 +96,11 @@
     function initAdminPanel() {
         pois = getPOIs();
 
-        adminMap = L.map('admin-map', { center: [13.338, 121.119], zoom: 16 });
+        adminMap = L.map('admin-map', { center: [13.339777, 121.119899], zoom: 15 });
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors', maxZoom: 19
         }).addTo(adminMap);
-        adminMap.setMaxBounds(L.latLngBounds([13.332, 121.113], [13.346, 121.128]).pad(0.05));
+        adminMap.setMaxBounds(L.latLngBounds([13.332701,121.118374],[13.346492,121.123030]).pad(0.05));
 
         var list = document.getElementById('admin-poi-list');
         if (list && !list.dataset.pillBound) {
