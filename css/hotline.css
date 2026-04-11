@@ -277,14 +277,13 @@ body {
 }
 
 .hotline-group {
-    background: rgba(0,0,0,0.05); 
     padding: 10px;
     border-radius: 8px;
 }
 
 .hotline-group h2 {
     color: orange;
-    margin-bottom: 10px;
+    margin-bottom: 10px; 
 }
 
 .hotline-card {
