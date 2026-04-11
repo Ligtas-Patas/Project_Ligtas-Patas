@@ -1,4 +1,14 @@
 /* ── User map ── */
+/* Fix: Leaflet zoom controls always on top */
+.leaflet-top,
+.leaflet-bottom {
+    z-index: 1001 !important;
+}
+
+.leaflet-control {
+    z-index: 1001 !important;
+}
+
         #patas-map {
             width: 100%;
             height: 75vh;
