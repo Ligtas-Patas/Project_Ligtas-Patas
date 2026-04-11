@@ -2,20 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hotlines-Ligtas-Patas</title>
   <link rel="stylesheet" href="./css/hotline.css">
   <script src="https://kit.fontawesome.com/d65d73018d.js" crossorigin="anonymous"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght,YOPQ@100..900,300&display=swap" rel="stylesheet">
 </head>
-<body>
+<body> 
 
   <nav class="navbar">
         <div class="navbar__container">
-            <a id="navbar__logo" href="./index.html">
-                <i class="fa-brands fa-watchman-monitoring"></i>
+            <a id="navbar__logo">
+                <i class="fa-brands fa-watchman-monitoring"></i> 
                 <strong class="logo-text">FLOOD MONITORING</strong>
             </a>
             <div class="navbar__toggle" id="mobile-menu">
@@ -26,7 +25,7 @@
             <ul class="navbar__menu">
                 <li class="navbar__item">
                     <a href="./index.html" class="navbar__links">
-                        <i class="fa-regular fa-house"></i>
+                        <i class="fa-slab fa-regular fa-house"></i>
                     </a>
                 </li>
                 <li class="navbar__item">
@@ -48,7 +47,7 @@
             </ul>
         </div>
     </nav>
-
+  
 <section class="hotline-container">
 
   <div class="hotline-left">
@@ -68,60 +67,89 @@
   </div>
 
   <div class="hotline-right">
-
     <div class="hotline-group">
-      <h2 class="gradient-textt">CDRRMO RESCUE/FIRE</h2>
-
-      <a href="tel:09157449698" class="hotline-card">
-        <span>0915-744-9698</span>
-        <span class="icon"><i class="fa-solid fa-phone"></i></span>
+    <h2 class="gradient-textt">CDRRMO RESCUE/FIRE</h2>
+    <div class="hotline-card">
+      <a href="tel:09157449698" class="icon">
+        <i class="fa-solid fa-phone"></i>
       </a>
-
-      <a href="tel:09997356447" class="hotline-card">
-        <span>0999-735-6447</span>
-        <span class="icon"><i class="fa-solid fa-phone"></i></span>
-      </a>
+    <span id="rescue1" class="editable">0915-744-9698</span>
+    <span class="edit-icon" style="display:none;">
+      <i class="fa-solid fa-pencil"></i>
+    </span>
     </div>
-
-    <div class="hotline-group">
-      <h2 class="gradient-textt">Police Station (PNP)</h2>
-
-      <a href="tel:09985985813" class="hotline-card">
-        <span>0998-598-5813</span>
-        <span class="icon"><i class="fa-solid fa-phone"></i></span>
+    <div class="hotline-card">
+      <a href="tel:09997356447" class="icon">
+        <i class="fa-solid fa-phone"></i>
       </a>
-
-      <a href="tel:09061791105" class="hotline-card">
-        <span>0906-179-1105</span>
-        <span class="icon"><i class="fa-solid fa-phone"></i></span>
-      </a>
-    </div>
-
-    <div class="hotline-group">
-      <h2 class="gradient-textt">Fire Station</h2>
-
-      <a href="tel:09156031561" class="hotline-card">
-        <span>0915-603-1561</span>
-        <span class="icon"><i class="fa-solid fa-phone"></i></span>
-      </a>
-
-      <a href="tel:+63432887777" class="hotline-card">
-        <span>(043) 288-7777</span>
-        <span class="icon"><i class="fa-solid fa-phone"></i></span>
-      </a>
-    </div>
-
-    <div class="hotline-group">
-      <h2 class="gradient-textt">City Health and Sanitation Department</h2>
-
-      <a href="tel:09083661556" class="hotline-card">
-        <span>0908-366-1556</span>
-        <span class="icon"><i class="fa-solid fa-phone"></i></span>
-      </a>
+      <span id="rescue2" class="editable">0999-735-6447</span>
+    <span class="edit-icon" style="display:none;">
+      <i class="fa-solid fa-pencil"></i>
+    </span>
     </div>
   </div>
 
+  <div class="hotline-group">
+    <h2 class="gradient-textt">Police Station (PNP)</h2>
+    <div class="hotline-card">
+      <a href="tel:09985985813" class="icon">
+        <i class="fa-solid fa-phone"></i>
+      </a>
+    <span id="police1" class="editable">0998-598-5813</span>
+    <span class="edit-icon" style="display:none;">
+      <i class="fa-solid fa-pencil"></i>
+    </span>
+    </div>
+    <div class="hotline-card">
+      <a href="tel:09061791105" class="icon">
+        <i class="fa-solid fa-phone"></i>
+      </a>
+      <span id="police2" class="editable">0906-179-1105</span>
+    <span class="edit-icon" style="display:none;">
+      <i class="fa-solid fa-pencil"></i>
+    </span>
+    </div>
+  </div>
+
+  <div class="hotline-group">
+    <h2 class="gradient-textt">Fire Station</h2>
+    <div class="hotline-card">
+      <a href="tel:09156031561" class="icon">
+        <i class="fa-solid fa-phone"></i>
+      </a>
+    <span id="fire1" class="editable">0915-603-1561</span>
+    <span class="edit-icon" style="display:none;">
+      <i class="fa-solid fa-pencil"></i>
+    </span>
+    </div>
+    <div class="hotline-card">
+      <a href="tel:(043)288-7777" class="icon">
+        <i class="fa-solid fa-phone"></i>
+      </a>
+      <span id="fire2" class="editable">(043) 288-7777</span>
+    <span class="edit-icon" style="display:none;">
+      <i class="fa-solid fa-pencil"></i>
+    </span>
+    </div>
+  </div>
+
+  <div class="hotline-group">
+    <h2 class="gradient-textt">City Health and Sanitation Department</h2>
+    <div class="hotline-card">
+      <a href="tel:tel:09083661556" class="icon">
+        <i class="fa-solid fa-phone"></i>
+      </a>
+      <span id="health1" class="editable">0908-366-1556</span>
+    <span class="edit-icon" style="display:none;">
+      <i class="fa-solid fa-pencil"></i>
+    </span>
+    </div>
+  </div>
+</div>
+
 </section>
-  <script src="./js/app.js"></script>
+<script src="./js/app.js"></script>
+<script src="./js/messages.js"></script>
+<script src="./js/hotline.js"></script>
 </body>
 </html>
