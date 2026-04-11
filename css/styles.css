@@ -963,3 +963,29 @@ body {
     .dash-card { padding: 18px 12px; }
     .dash-card__num { font-size: 2.2rem; }
 }
+/* ── Feedback timeline badge ── */
+.dash-tl-badge--feedback {
+    background: rgba(96, 180, 255, 0.15);
+    border: 1px solid rgba(96, 180, 255, 0.35);
+    color: #93c5fd;
+
+    border-radius: 999px; /* match other badges */
+    padding: 4px 10px;     /* match .dash-tl-badge */
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+}
+
+.dash-tl-row--feedback {
+    opacity: 0.92;
+}
+
+.dash-tl-fb-icon {
+    font-style: normal;
+}
+
+.dash-tl-fb-from {
+    opacity: 0.55;
+    font-size: 0.85em;
+    margin-left: 4px;
+}

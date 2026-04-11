@@ -6,6 +6,7 @@
     const REPORTS_KEY = 'ligtas_reports';
     const POIS_KEY = 'ligtas_patas_pois';
     const ZONE_EVENTS_KEY = 'ligtas_zone_events';
+    const FEEDBACK_EVENTS_KEY = 'ligtas_feedback_events';
 
     function generateId() {
         return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
@@ -100,10 +101,37 @@
         saveZoneEvents(events);
     }
 
+    function getFeedbackEvents() {
+        try {
+            const raw = localStorage.getItem(FEEDBACK_EVENTS_KEY);
+            if (!raw) return [];
+            const parsed = JSON.parse(raw);
+            return Array.isArray(parsed) ? parsed : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveFeedbackEvents(events) {
+        localStorage.setItem(FEEDBACK_EVENTS_KEY, JSON.stringify(events));
+    }
+
+    /**
+     * Log an admin feedback action to the timeline.
+     * @param {object} event - { reportId, reportName, barangay, fromState, toState, timestamp, createdAt }
+     */
+    function addFeedbackEvent(event) {
+        const events = getFeedbackEvents();
+        events.unshift(event);
+        if (events.length > 200) events.length = 200;
+        saveFeedbackEvents(events);
+    }
+
     window.LigtasStorage = {
         REPORTS_KEY: REPORTS_KEY,
         POIS_KEY: POIS_KEY,
         ZONE_EVENTS_KEY: ZONE_EVENTS_KEY,
+        FEEDBACK_EVENTS_KEY: FEEDBACK_EVENTS_KEY,
         generateId: generateId,
         getReports: getReports,
         saveReports: saveReports,
@@ -114,6 +142,9 @@
         getZoneEvents: getZoneEvents,
         saveZoneEvents: saveZoneEvents,
         addZoneEvent: addZoneEvent,
+        getFeedbackEvents: getFeedbackEvents,
+        saveFeedbackEvents: saveFeedbackEvents,
+        addFeedbackEvent: addFeedbackEvent,
         DEFAULT_POIS: DEFAULT_POIS
     };
 
