@@ -9,7 +9,7 @@ var weatherAnimIds = { user: null, admin: null };
 function createDrops(count, w, h, isTyphoon) {
     return Array.from({ length: count }, function () { return {
         x: Math.random() * w,
-        y: Math.random() * h,
+        y:100 + Math.random() * (h - 100),
         speed:   isTyphoon ? (6  + Math.random() * 7)  : (3.5 + Math.random() * 4),
         length:  isTyphoon ? (14 + Math.random() * 16) : (9   + Math.random() * 10),
         opacity: isTyphoon ? (0.4 + Math.random() * 0.5) : (0.25 + Math.random() * 0.45),
@@ -50,7 +50,7 @@ function drawFrame(ctx, drops, clouds, w, h) {
         ctx.stroke();
         ctx.restore();
         drop.y += drop.speed;
-        if (drop.y > h + 20) { drop.y = -20; drop.x = Math.random() * w; }
+        if (drop.y > h + 20) { drop.y = 100; drop.x = Math.random() * w; }
     });
     clouds.forEach(function (cloud) {
         ctx.save();
@@ -121,17 +121,17 @@ function activateWeather(type) {
         stopWeatherCanvas('admin');
         stopWeatherCanvas('user');
         hideBanner();
-        if (window.showToast) showToast('Weather cleared — All Clear issued');
+        if (showMessage) showMessage('Weather cleared — All Clear issued', "success");
     } else if (type === 'heavy-rain') {
         startWeatherCanvas('admin', false, false);
         startWeatherCanvas('user', true, false);
         showBanner('⚠️ Heavy Rain Warning: Expect heavy rainfall in Barangay Patas. Stay indoors and avoid flood-prone areas.');
-        if (window.showToast) showToast('Heavy Rain reminder activated');
+        if (showMessage) showMessage('Heavy Rain reminder activated', "warning");
     } else if (type === 'typhoon') {
         startWeatherCanvas('admin', false, true);
         startWeatherCanvas('user', true, true);
         showBanner('🚨 Typhoon / Storm Warning: A typhoon may affect Barangay Patas. Prepare for possible flooding. Follow official advisories.');
-        if (window.showToast) showToast('Typhoon/Storm reminder activated');
+        if (showMessage) showMessage('Typhoon/Storm reminder activated', "error");
     }
 }
 
@@ -139,14 +139,14 @@ function activateWeather(type) {
 window.addEventListener('DOMContentLoaded', function () {
     var saved = localStorage.getItem('ligtas_weather');
     if (!saved || saved === 'clear') return;
-    var isAdminView = localStorage.getItem('isAdminLoggedIn') === 'true';
+    
     setTimeout(function () {
         if (saved === 'heavy-rain') {
-            if (isAdminView) startWeatherCanvas('admin', false, false);
+            if (window.isAdmin) startWeatherCanvas('admin', false, false);
             startWeatherCanvas('user', true, false);
             showBanner('⚠️ Heavy Rain Warning: Expect heavy rainfall in Barangay Patas. Stay indoors and avoid flood-prone areas.');
         } else if (saved === 'typhoon') {
-            if (isAdminView) startWeatherCanvas('admin', false, true);
+            if (window.isAdmin) startWeatherCanvas('admin', false, true);
             startWeatherCanvas('user', true, true);
             showBanner('🚨 Typhoon / Storm Warning: A typhoon may affect Barangay Patas. Prepare for possible flooding. Follow official advisories.');
         }
