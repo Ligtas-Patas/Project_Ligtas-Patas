@@ -1,0 +1,147 @@
+/* ============================================================
+   Ligtas-Patas Flood Monitoring — Component Styles
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   Weather Warning Banner
+   ------------------------------------------------------------ */
+
+.weather-banner {
+    display: none;
+    background: #b45309;
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    font-weight: 700;
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+.weather-banner-issuer {
+    margin-left: 12px;
+    opacity: 0.7;
+    font-size: 12px;
+}
+
+
+/* ------------------------------------------------------------
+   Map Wrapper & Canvas Overlay
+   ------------------------------------------------------------ */
+
+.map-wrapper {
+    position: relative;
+    width: 100%;
+    height: 75vh;
+}
+
+.map-fill {
+    width: 100%;
+    height: 100%;
+}
+
+.weather-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 400;
+    border-radius: 10px;
+}
+
+
+/* ------------------------------------------------------------
+   Weather / Emergency Controls
+   ------------------------------------------------------------ */
+
+.weather-controls {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.weather-controls__label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%;
+    margin-bottom: 2px;
+}
+
+/* Base button */
+.weather-btn {
+    flex: 1;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* Heavy Rain variant */
+.weather-btn--rain {
+    border: 1.5px solid rgba(100, 180, 255, 0.5);
+    background: rgba(100, 180, 255, 0.1);
+    color: #7dd3fc;
+}
+
+/* Typhoon / Storm variant */
+.weather-btn--typhoon {
+    border: 1.5px solid rgba(239, 68, 68, 0.5);
+    background: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+}
+
+/* Clear / All Clear variant — no flex:1 so it stays auto-width */
+.weather-btn--clear {
+    flex: none;
+    border: 1.5px solid rgba(34, 197, 94, 0.5);
+    background: rgba(34, 197, 94, 0.1);
+    color: #86efac;
+}
+
+.weather-btn--rain:hover {
+    border-color: rgba(100, 180, 255, 0.9);
+    background: rgba(100, 180, 255, 0.22);
+    color: #bae6fd;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(100, 180, 255, 0.25);
+}
+.weather-btn--rain:active {
+    transform: translateY(0px);
+    box-shadow: none;
+    background: rgba(100, 180, 255, 0.3);
+}
+
+.weather-btn--typhoon:hover {
+    border-color: rgba(239, 68, 68, 0.9);
+    background: rgba(239, 68, 68, 0.22);
+    color: #fecaca;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25);
+}
+.weather-btn--typhoon:active {
+    transform: translateY(0px);
+    box-shadow: none;
+    background: rgba(239, 68, 68, 0.3);
+}
+
+.weather-btn--clear:hover {
+    border-color: rgba(34, 197, 94, 0.9);
+    background: rgba(34, 197, 94, 0.22);
+    color: #bbf7d0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.25);
+}
+.weather-btn--clear:active {
+    transform: translateY(0px);
+    box-shadow: none;
+    background: rgba(34, 197, 94, 0.3);
+}
