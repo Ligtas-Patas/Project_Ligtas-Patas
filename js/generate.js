@@ -1,6 +1,5 @@
 (() => {
     const REPORTS_KEY = (window.LigtasStorage && window.LigtasStorage.REPORTS_KEY) || 'ligtas_reports';
-    const isAdminLoggedIn = () => localStorage.getItem('isAdminLoggedIn') === 'true';
     const TESTGEN_MIN_INTERVAL = 4000;
     const TESTGEN_MAX_INTERVAL = 12000;
     const TESTGEN_MAX_BATCH = 300;
@@ -176,7 +175,7 @@
         if (testGeneratorRunning) return;
         testGeneratorRunning = true;
         queueNextAutoGenerate();
-        if (typeof window.showToast === 'function') window.showToast('Auto test generation started');
+        if (typeof showMessage === 'function') showMessage('Auto test generation started', "success");
     }
 
     function stopAutoGenerator() {
@@ -186,7 +185,7 @@
             testGeneratorTimer = null;
         }
         updateGeneratorStatus('Auto generator: Stopped');
-        if (typeof window.showToast === 'function') window.showToast('Auto test generation stopped');
+        if (typeof showMessage === 'function') showMessage('Auto test generation stopped', "success");
     }
     function clearReports() {
         tgSaveReports([]);
@@ -195,7 +194,7 @@
             window.renderDashboard();
         }
         if (typeof window.showToast === 'function') {
-            window.showToast('All reports cleared');
+            showMessage('All reports cleared', "success");
         }
     }
 
@@ -207,7 +206,7 @@
     }
 
     window.initTestGeneratorControls = function initTestGeneratorControls() {
-        if (!isAdminLoggedIn()) return;
+        if (!window.isAdmin) return;
         const generateBtn = document.getElementById('testgen-generate-btn');
         const startBtn = document.getElementById('testgen-start-btn');
         const stopBtn = document.getElementById('testgen-stop-btn');
@@ -218,14 +217,14 @@
         generateBtn.addEventListener('click', () => {
             const count = parseBatchCount();
             if (!count) {
-                if (typeof window.showToast === 'function') {
-                    window.showToast(`Enter a valid batch count (1-${TESTGEN_MAX_BATCH})`);
+                if (typeof showMessage === 'function') {
+                    showMessage(`Enter a valid batch count (1-${TESTGEN_MAX_BATCH})`, "error");
                 }
                 return;
             }
             const created = appendGeneratedReports(count);
-            if (typeof window.showToast === 'function') {
-                window.showToast(`Generated ${created} test report(s)`);
+            if (typeof showMessage === 'function') {
+                showMessage(`Generated ${created} test report(s)`, "success");
             }
         });
 
