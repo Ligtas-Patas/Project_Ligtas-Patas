@@ -1,6 +1,3 @@
-// ═══════════════════════════════════════════════
-//  PRIVATE MAP MODULE
-// ═══════════════════════════════════════════════
 (function () {
     var LS = window.LigtasStorage;
     if (!LS || typeof L === 'undefined') return;
@@ -26,20 +23,7 @@
         return map[s] || 'badge-unknown';
     }
 
-    // --- Toast ---
-    function showToast(msg) {
-        var t = document.getElementById('admin-toast');
-        if (!t) { console.log('Toast:', msg); return; }
-        t.textContent = msg;
-        t.classList.add('show');
-        setTimeout(function () { t.classList.remove('show'); }, 2800);
-    }
-    window.showToast = showToast;
-
-    // --- View Switching ---
-    var adminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
-
-    if (adminLoggedIn) {
+    if (window.isAdmin) {
         var uv = document.getElementById('user-view');
         var ap = document.getElementById('admin-panel');
         if (uv) uv.style.display = 'none';
@@ -49,15 +33,14 @@
         initUserMap();
     }
 
-    // --- User Map ---
     function initUserMap() {
-        var userMap = L.map('patas-map', { center: [13.339777, 121.119899], zoom: 15, zoomControl: false });
+        var map = L.map('patas-map', { center: [13.339777, 121.119899], zoom: 15, zoomControl: false});
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors', maxZoom: 19
-        }).addTo(userMap);
-        userMap.setMaxBounds(L.latLngBounds([13.332701, 121.118374], [13.346492, 121.123030]).pad(0.05));
-        L.control.zoom({ position: 'bottomright' }).addTo(userMap);
-
+        }).addTo(map);
+        map.setMaxBounds(L.latLngBounds([13.332701,121.118374],[13.346492,121.123030]).pad(0.05));
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+        
         var legend = L.control({ position: 'bottomleft' });
         legend.onAdd = function () {
             var div = L.DomUtil.create('div', 'map-legend');
@@ -68,15 +51,15 @@
                 '<div><span class="legend-dot" style="background:#64748b"></span>Unknown</div>';
             return div;
         };
-        legend.addTo(userMap);
+        legend.addTo(map);
 
-        var userMarkers = {};
+        var markerMap = {};
         function renderMarkers() {
-            Object.values(userMarkers).forEach(function (m) { userMap.removeLayer(m); });
-            userMarkers = {};
+            Object.values(markerMap).forEach(function (m) { map.removeLayer(m); });
+            markerMap = {};
             getPOIs().forEach(function (poi) {
                 var m = L.marker([poi.lat, poi.lng], { icon: makeIcon(poi.status) })
-                    .addTo(userMap)
+                    .addTo(map)
                     .bindPopup(
                         '<div style="min-width:200px;padding:4px">' +
                         '<strong style="font-size:14px">' + poi.name + '</strong><br>' +
@@ -86,7 +69,10 @@
                         '</div>',
                         { maxWidth: 260 }
                     );
-                userMarkers[poi.id] = m;
+                m.on('click', function () {
+                    map.flyTo([poi.lat, poi.lng], 17, { animate: true, duration: 0.8 });
+                });
+                markerMap[poi.id] = m;
             });
         }
         renderMarkers();
@@ -96,20 +82,20 @@
         });
     }
 
-    // --- Admin Map ---
     var adminMap;
-    var adminMarkers = {};
-    var currentPois = [];
+    var markerMap = {};
+    var pois = [];
 
     function initAdminPanel() {
-        currentPois = getPOIs();
-        adminMap = L.map('admin-map', { center: [13.339777, 121.119899], zoom: 15, zoomControl: false });
+        pois = getPOIs();
+
+        adminMap = L.map('admin-map', { center: [13.339777, 121.119899], zoom: 15, zoomControl: false});
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors', maxZoom: 19
         }).addTo(adminMap);
-        adminMap.setMaxBounds(L.latLngBounds([13.332701, 121.118374], [13.346492, 121.123030]).pad(0.05));
-        L.control.zoom({ position: 'bottomright' }).addTo(adminMap);
+        adminMap.setMaxBounds(L.latLngBounds([13.332701,121.118374],[13.346492,121.123030]).pad(0.05));
 
+        L.control.zoom({ position: 'bottomright' }).addTo(adminMap);
         var list = document.getElementById('admin-poi-list');
         if (list && !list.dataset.pillBound) {
             list.dataset.pillBound = '1';
@@ -117,21 +103,36 @@
                 var pill = e.target.closest('.pill');
                 if (!pill || !pill.dataset.poiId) return;
                 e.stopPropagation();
+                var poi = pois.find(function (p) { return p.id === pill.dataset.poiId; });
+                if (poi) {
+                    adminMap.flyTo([poi.lat, poi.lng], 17, { animate: true, duration: 0.8 });
+                    setTimeout(function () {
+                        if (markerMap[poi.id]) markerMap[poi.id].openPopup();
+                    }, 850);
+                    document.querySelectorAll('.poi-card').forEach(function (c) { c.classList.remove('active'); });
+                    var card = document.getElementById('card-' + poi.id);
+                    if (card) card.classList.add('active');
+                }
                 setStatus(pill.dataset.poiId, pill.dataset.status);
             });
         }
+
         renderAll();
     }
 
-    function renderAll() { renderSidebar(); renderAdminMarkers(); }
+    function renderAll() {
+        renderSidebar();
+        renderAdminMarkers();
+    }
 
     function renderSidebar() {
         var list = document.getElementById('admin-poi-list');
         if (!list) return;
         list.innerHTML = '';
-        currentPois.forEach(function (poi) {
+        pois.forEach(function (poi) {
             var card = document.createElement('div');
             card.className = 'poi-card';
+            card.style.cursor = 'default';
             card.id = 'card-' + poi.id;
             var pillsHtml = ['safe', 'moderate', 'dangerous', 'unknown'].map(function (s) {
                 var active = poi.status === s ? 'active-pill' : '';
@@ -141,20 +142,15 @@
                 '<div class="poi-card-name">' + poi.name + '</div>' +
                 '<div class="poi-card-coords">' + poi.lat.toFixed(6) + ', ' + poi.lng.toFixed(6) + '</div>' +
                 '<div class="status-pills">' + pillsHtml + '</div>';
-            card.addEventListener('click', function () {
-                adminMap.flyTo([poi.lat, poi.lng], 17, { duration: 0.8 });
-                if (adminMarkers[poi.id]) adminMarkers[poi.id].openPopup();
-                document.querySelectorAll('.poi-card').forEach(function (c) { c.classList.remove('active'); });
-                card.classList.add('active');
-            });
+
             list.appendChild(card);
         });
     }
 
     function renderAdminMarkers() {
-        Object.values(adminMarkers).forEach(function (m) { adminMap.removeLayer(m); });
-        adminMarkers = {};
-        currentPois.forEach(function (poi) {
+        Object.values(markerMap).forEach(function (m) { adminMap.removeLayer(m); });
+        markerMap = {};
+        pois.forEach(function (poi) {
             var m = L.marker([poi.lat, poi.lng], { icon: makeIcon(poi.status) })
                 .addTo(adminMap)
                 .bindPopup(
@@ -165,12 +161,22 @@
                     '</div>',
                     { maxWidth: 240 }
                 );
-            adminMarkers[poi.id] = m;
+            m.on('click', function () {
+                adminMap.flyTo([poi.lat, poi.lng], 17, { animate: true, duration: 0.8 });
+                // Highlight the matching sidebar card
+                document.querySelectorAll('.poi-card').forEach(function (c) { c.classList.remove('active'); });
+                var card = document.getElementById('card-' + poi.id);
+                if (card) {
+                    card.classList.add('active');
+                    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            });
+            markerMap[poi.id] = m;
         });
     }
 
     function setStatus(id, status) {
-        var prev = currentPois.find(function (p) { return p.id === id; });
+        var prev = pois.find(function (p) { return p.id === id; });
         if (!prev || prev.status === status) return;
         if (LS.addZoneEvent) {
             LS.addZoneEvent({
@@ -186,12 +192,10 @@
                 })
             });
         }
-        currentPois = currentPois.map(function (p) {
-            return p.id === id ? Object.assign({}, p, { status: status }) : p;
-        });
-        savePOIs(currentPois);
+        pois = pois.map(function (p) { return p.id === id ? Object.assign({}, p, { status: status }) : p; });
+        savePOIs(pois);
         renderAll();
-        showToast('Status updated → ' + STATUS_LABEL[status]);
+        showMessage('Status updated → ' + STATUS_LABEL[status], "success");
         if (typeof window.renderDashboard === 'function') window.renderDashboard();
     }
 })();
