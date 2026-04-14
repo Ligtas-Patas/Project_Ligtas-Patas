@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Ligtas-Patas</title>
+    <link rel="stylesheet" href="about.css">
+    <script src="https://kit.fontawesome.com/d65d73018d.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght,YOPQ@100..900,300&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+
+ <nav class="navbar">
+        <div class="navbar__container">
+            <a id="navbar__logo">
+                <i class="fa-brands fa-watchman-monitoring"></i> 
+                <strong class="logo-text">FLOOD MONITORING</strong>
+            </a>
+            <div class="navbar__toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="./index.html" class="navbar__links">
+                        <i class="fa-slab fa-regular fa-house"></i>
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="./hotline.html" class="navbar__links">
+                        <i class="fa-solid fa-phone"></i>
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="./reports.html" class="navbar__links">
+                        <i class="fa-solid fa-walkie-talkie"></i>
+                    </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="./about.html" class="navbar__links">About</a>
+                </li>
+                <li class="navbar__btn">
+                    <a href="./main.html" class="button" id="loginBtn">Log In</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+<main>
+        <section class="hero-section">
+            <div class="wave-overlay"></div>
+            
+            <div class="content-header">
+                <h1 class="reveal-text">About | Ligtas-Patas</h1>
+                <p class="reveal-text">Isang inisyatibo para sa mas ligtas at handang Barangay Patas.</p>
+            </div>
+
+            <div class="about-grid-container">
+                <div class="about-cards-stack">
+                    <div class="info-card">
+                        <h3 class="reveal-text">Tungkol sa Proyekto</h3>
+                        <p class="reveal-text">Ang Ligtas-Patas ay isang flood monitoring system na idinisenyo upang magbigay ng impormasyon tungkol sa antas ng tubig sa mga kritikal na lugar sa barangay, access sa emergency hotlines, at pagbibigay ng babala laban sa pagbaha.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3 class="reveal-text">Layunin ng Proyekto</h3>
+                        <p class="reveal-text">Layunin nito na paigtingin ang kaligtasan at kahandaan ng Barangay Patas upang ang bawat pamilya ay magkaroon ng sapat na oras para lumikas o maghanda sa panahon ng sakuna.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3 class="reveal-text">Vision ng Developers</h3>
+                        <p class="reveal-text">Hinahangad namin ang isang komunidad kung saan ang teknolohiya ay nagsisilbing tulay sa kaligtasan at pagkakaisa ng bawat mamamayan.</p>
+                    </div>
+                </div>
+
+                <div class="about-preview-right">
+                    <img src="page.jpg" alt="Ligtas-Patas Preview" class="web-image">
+                </div>
+            </div> <div class="scroll-arrow" id="scrollTrigger">
+                <span>EXPLORE</span>
+                <div class="arrow-icon">▼</div>
+            </div>
+        </section>
+
+        <section class="details-section" id="details">
+            <div class="cards-wrapper">
+                <h2 class="title">Kilalanin ang Pangkat</h2>
+                <div class="character-card">
+                    <div class="card-left">
+                        <h2>DEVELOPERS</h2>
+                        <div class="circle-picker" id="dev-circles">
+                            <div class="circle" style="background-image: url('Jared.jpg');"data-name="Jared Hagos" data-bio="Lead Developer" data-img="Jared.jpg"></div>
+                            <div class="circle" style="background-image: url('carl.jpg');"data-name="John Karl Mendoza" data-bio="Geospatial Engineer" data-img="carl.jpg"></div>
+                            <div class="circle" style="background-image: url('rocel.jfif');"data-name="Rocel Ane Jamilla" data-bio="UI/UX Architect" data-img="rocel.jfif"></div>
+                            <div class="circle" style="background-image: url('balahim.jpg');"data-name="Ladizkhan Balahim" data-bio="Data Integration Specialist" data-img="balahim.jpg"></div>
+                            <div class="circle" style="background-image: url('macalintal.jpg');"data-name="Lianne Loise Macalintal" data-bio="Core Contributor" data-img="macalintal.jpg"></div>
+                        </div>
+                    </div>
+                    <div class="card-right" id="dev-profile">
+                        <div class="info-text">
+                            <h3 id="dev-name">Ligtas-Patas</h3>
+                            <p id="dev-bio">Ang pangkat na bumuo ng web-application.</p>
+                        </div>
+                        <img id="dev-photo" src="page.jpg" alt="Developer">
+                    </div>
+                </div>
+
+                <div class="character-card">
+                    <div class="card-left">
+                        <h2>THE TEAM</h2>
+                        <div class="team-scroll-container">
+                            <button class="nav-arrow" id="team-left">◀</button>
+                            <div class="circle-viewport">
+                                <div class="circle-picker horizontal" id="team-circles">
+                                    <div class="circle" style="background-image: url('balahim.jpg');" data-name="Ladizkhan Balahim" data-bio="Mananaliksik" data-img="balahim.jpg"></div>
+                                    <div class="circle" style="background-image: url('shaine.jpg');" data-name="Shaine Dela Cruz" data-bio="Mananaliksik" data-img="shaine.jpg"></div>
+                                    <div class="circle" style="background-image: url('Jared.jpg');" data-name="Jared Hagos" data-bio="Mananaliksik" data-img="Jared.jpg"></div>
+                                    <div class="circle" style="background-image: url('rocel.jfif');" data-name="Rocel Ane Jamilla" data-bio="Mananaliksik" data-img="rocel.jfif"></div>
+                                    <div class="circle" style="background-image: url('karyll.jfif');" data-name="Karyll Kate Lascano" data-bio="Mananaliksik" data-img="karyll.jfif"></div>
+                                    <div class="circle" style="background-image: url('gelbertpic.jfif');" data-name="Jhon Gelbert Linatoc" data-bio="Mananaliksik" data-img="gelbertpic.jfif"></div>
+                                    <div class="circle" style="background-image: url('bryan.jpg');"data-name="Bryan Jay Macalelong" data-bio="Mananaliksik" data-img="bryan.jpg"></div>
+                                    <div class="circle" style="background-image: url('macalintal.jpg');" data-name="Lianne Loise Macalintal" data-bio="Mananaliksik" data-img="macalintal.jpg"></div>
+                                    <div class="circle" style="background-image: url('carl.jpg');" data-name="John Karl Mendoza" data-bio="Mananaliksik" data-img="carl.jpg"></div>
+                                    <div class="circle" style="background-image: url('Kaye.jpg');" data-name="Kaye Obando" data-bio="Mananaliksik" data-img="Kaye.jpg"></div>
+                                </div>
+                            </div>
+                            <button class="nav-arrow" id="team-right">▶</button>
+                        </div>
+                    </div>
+                    <div class="card-right" id="team-profile">
+                        <div class="info-text">
+                            <h3 id="team-name">Mananaliksik</h3>
+                            <p id="team-bio">Ang bumubuo sa grupo ng Ligtas-Patas</p>
+                        </div>
+                        <img id="team-photo" src="groupic.jpg" alt="Team Member">
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-up" id="scrollTopTrigger">
+                <div class="arrow-icon">▲</div>
+                <span>BACK TO TOP</span>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    
+    <script src="about.js"></script>
+</body>
+</body>
+</html>
