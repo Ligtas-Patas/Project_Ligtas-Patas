@@ -343,6 +343,9 @@ body {
     .org-logo {
         width: 45px;            
     }
+    .hotline-container{
+    flex-direction: column-reverse;
+    }
     .hotline-left {
         padding-top: 30px ;
         text-align: center;   
